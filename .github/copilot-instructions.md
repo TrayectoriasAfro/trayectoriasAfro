@@ -1,24 +1,28 @@
 ---
 name: Global Development & Documentation Standards
-description: Unified guidelines for documentation, file operations, and knowledge management across the entire repository.
+description: Unified guidelines for Django/SvelteKit submodule architecture, Docker standards, and documentation.
 applyTo: '**/*'
 ---
 
 # Copilot Guidelines
 
-### 1. Documentation & Comments
-* **Be Ruthlessly Concise:** Prioritize "why" over "what." If the code clearly shows *what* is happening, do not add a comment.
-* **Target Audience:** Write for an **intermediate developer**. Assume they understand syntax, but need context on architectural decisions.
-* **Self-Documenting Code:** Prefer renaming variables or refactoring functions for clarity over adding descriptive comments.
-* **No Redundancy:** If a function is self-explanatory, do not write a comment.
+### 1. Architecture & Context
+* **Project Structure:** This is a containerized monorepo. 
+    * **Root:** Global scripting, Docker Compose, and `.env` management.
+    * **Backend (`/mstdb_manager`):** Django + Django Rest Framework.
+    * **Frontend (`/mstdb_theme`):** SvelteKit.
+* **Submodule Isolation:** Ensure backend logic stays in `mstdb_manager` and UI logic stays in `mstdb_theme`. Do not leak environment-specific **application** code across submodule boundaries. Infrastructure coupling (e.g., the Dockerfile building the SvelteKit output into Django's staticfiles) is intentional and expected.
+* **Legacy Awareness:** Before proposing refactors, check `git log` or existing patterns to avoid reverting intentional architectural decisions.
 
-### 2. Docker & Infrastructure
-* **Modern Compose Syntax:** Never include the `version` key in `compose.yml` or `docker-compose.yml` files. It is deprecated and triggers unnecessary warnings.
-* **Optimization:** Prioritize multi-stage builds and slim/alpine base images unless specific dependencies require a full OS.
+### 2. Documentation & Comments
+* **Be Ruthlessly Concise:** Prioritize "why" over "what." If the code is readable, do not add a comment.
+* **Target Audience:** Write for an **intermediate developer**. Assume syntax fluency; focus on architectural "intent."
+* **No Redundancy:** If a function or variable is self-explanatory, skip the documentation.
 
-### 3. File Operations
-* **Strict Scope:** Do not create new documentation files (`.md`, `.txt`) or update `README.md` unless explicitly requested.
-* **No Ghost Files:** Only propose file creation if the content is ready to be implemented.
+### 3. Docker & Infrastructure
+* **Modern Compose:** **Never** include the `version` key in `compose.yml`. It is deprecated.
+* **Image Optimization:** Use multi-stage builds and `slim`/`alpine` variants by default.
 
-### 4. Knowledge Management
-* **Skills Over Docs:** If a piece of information is a "rule" or "pattern" for future prompts, propose it as a **Copilot Skill/Instruction** instead of a code comment.
+### 4. Workflow & Knowledge
+* **File Operations:** Do not create `.md` files or update `README.md` unless explicitly requested. 
+* **Skills Over Docs:** Propose "Rules" or "Patterns" as **Copilot Skills** instead of embedding them as code comments.
