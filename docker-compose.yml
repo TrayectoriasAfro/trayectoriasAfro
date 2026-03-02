@@ -31,7 +31,6 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-trayectorias_user}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-trayectorias}
     volumes:
       - ./mstdb_manager:/app
-      - static_volume:/app/staticfiles
       - media_volume:/app/media
     ports:
       - "8000:8000"
@@ -47,10 +46,27 @@ services:
     networks:
       - trayectorias_network
 
+  frontend:
+    build:
+      context: ./mstdb_theme
+      dockerfile: Dockerfile
+    container_name: trayectorias_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - trayectorias_network
+
 volumes:
   postgres_data:
-    driver: local
-  static_volume:
     driver: local
   media_volume:
     driver: local
