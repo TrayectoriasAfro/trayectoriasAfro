@@ -26,3 +26,7 @@ applyTo: '**/*'
 ### 4. Workflow & Knowledge
 * **File Operations:** Do not create `.md` files or update `README.md` unless explicitly requested. 
 * **Skills Over Docs:** Propose "Rules" or "Patterns" as **Copilot Skills** instead of embedding them as code comments.
+
+### 5. Styles
+* **No styles outside css or scss** Do not write component-scoped styles.
+* **Fix styles outside css or scss** Move component-scoped styles to `custom.css` or `custom.scss` files
