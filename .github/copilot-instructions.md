@@ -30,3 +30,17 @@ applyTo: '**/*'
 ### 5. Styles
 * **No styles outside css or scss** Do not write component-scoped styles.
 * **Fix styles outside css or scss** Move component-scoped styles to `custom.css` or `custom.scss` files
+
+### 6. Accessibility
+
+- Treat accessibility as a release requirement for all UI changes in `mstdb_theme`.
+- Minimum target: **WCAG 2.1 Level AA**.
+- For any UI/component/form update, ensure:
+  - full keyboard operability,
+  - visible focus states,
+  - semantic HTML and correct ARIA usage,
+  - sufficient color contrast,
+  - accessible form labels/errors,
+  - alt text for meaningful images.
+- Validate with automated checks (if available in project tooling) and fix violations before finalizing.
+- When uncertain, follow project guidance in `mstdb_theme/compliance`.
