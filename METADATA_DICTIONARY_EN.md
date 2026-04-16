@@ -42,17 +42,17 @@ Each row represents an enslaved person recorded in the database. The same person
 | `altura` | Text | Description of the person's height as stated in the document. |
 | `cabello` | Text | Description of the person's hair as stated in the document. |
 | `ojos` | Text | Description of the person's eyes as stated in the document. |
-| `calidades` | Text (`|`-delimited values) | Socioethnic classification(s) (*calidad*) ascribed to the person. See `cv_calidades.csv`. |
-| `agencia/adaptacion` | Text (`|`-delimited values) | Level(s) of agency or adaptation recorded. See `cv_agencia_adaptacion.csv`. |
-| `etnonimos` | Text (`|`-delimited values) | Ethnonym(s) associated with the person. See `cv_etnonimos.csv`. |
+| `calidades` | Text `\|`\-delimited values | Socioethnic classification(s) (*calidad*) ascribed to the person. See `cv_calidades.csv`. |
+| `agencia/adaptacion` | Text `\|`\-delimited values | Level(s) of agency or adaptation recorded. See `cv_agencia_adaptacion.csv`. |
+| `etnonimos` | Text `\|`\-delimited values | Ethnonym(s) associated with the person. See `cv_etnonimos.csv`. |
 | `procedencia_lugar_id` | Integer | Identifier of the place of African or other prior origin. Reference to `lugar_id` in `lugares.csv`. |
 | `procedencia_adicional` | Text | Additional provenance information not captured by the place field (e.g., ship name or establishment). |
 | `marcas_corporales` | Text | Description of body marks, brandings (*carimbos*), ritual scarifications, or other physical signs. |
 | `conducta` | Text | Reports on the conduct of the enslaved person as noted in the document. |
 | `salud` | Text | Temporary or permanent health condition of the enslaved person at the time of the event. May include pregnancy status. |
-| `ocupaciones` | Text (`|`-delimited values) | Occupation(s) of the person. See `cv_ocupaciones.csv`. |
+| `ocupaciones` | Text `\|`\-delimited values | Occupation(s) of the person. See `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Text | Occupation category (e.g., domestic service, craft, obraje). |
-| `estado_matrimonial` | Text (`|`-delimited values) | Marital status of the person. See `cv_estado_matrimonial.csv`. |
+| `estado_matrimonial` | Text `\|`\-delimited values | Marital status of the person. See `cv_estado_matrimonial.csv`. |
 | `lugar_nacimiento_id` | Integer | Identifier of the place of birth. Reference to `lugar_id` in `lugares.csv`. |
 | `fecha_nacimiento` | Date (ISO 8601) | Computed date of birth. See [Date conventions](#date-conventions). |
 | `fecha_nacimiento_raw` | Text | Literal birth-date text in the document. |
@@ -61,7 +61,7 @@ Each row represents an enslaved person recorded in the database. The same person
 | `fecha_defuncion` | Date (ISO 8601) | Computed date of death. |
 | `fecha_defuncion_raw` | Text | Literal death-date text in the document. |
 | `fecha_defuncion_factual` | Boolean | `True` if the date is documented directly in the source. |
-| `documentos` | Text (`|`-delimited values) | Identifiers of the documents in which the person appears. Reference to `documento_idno` in `documentos.csv`. |
+| `documentos` | Text `\|`\-delimited values | Identifiers of the documents in which the person appears. Reference to `documento_idno` in `documentos.csv`. |
 | `notas` | Text | Additional or clarifying notes entered by the transcriber for the event associated with the enslaved person. |
 
 ---
@@ -78,10 +78,10 @@ Each row represents a non-enslaved person associated with one or more documentar
 | `nombre_normalizado` | Text | Full normalized name. |
 | `sexo` | Text | Sex as recorded. Values: `v` (Male), `m` (Female), `i` (Unknown). |
 | `honorifico` | Text | Honorific associated with the person. Values: `nan` (N/A), `don` (Don), `dna` (Doña), `doc` (Doctor), `fra` (Fray). |
-| `calidades` | Text (`|`-delimited values) | Socioethnic classification(s). See `cv_calidades.csv`. |
-| `ocupaciones` | Text (`|`-delimited values) | Occupation(s). See `cv_ocupaciones.csv`. |
+| `calidades` | Text `\|`\-delimited values | Socioethnic classification(s). See `cv_calidades.csv`. |
+| `ocupaciones` | Text `\|`\-delimited values | Occupation(s). See `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Text | Occupation category. |
-| `estado_matrimonial` | Text (`|`-delimited values) | Marital status. See `cv_estado_matrimonial.csv`. |
+| `estado_matrimonial` | Text `\|`\-delimited values | Marital status. See `cv_estado_matrimonial.csv`. |
 | `entidad_asociada` | Text | Corporation or institution the person is associated with. Reference to `corporacion_idno` in `corporaciones.csv`. |
 | `lugar_nacimiento_id` | Integer | Reference to `lugar_id` in `lugares.csv`. |
 | `fecha_nacimiento` | Date (ISO 8601) | See [Date conventions](#date-conventions). |
@@ -91,7 +91,7 @@ Each row represents a non-enslaved person associated with one or more documentar
 | `fecha_defuncion` | Date (ISO 8601) |  |
 | `fecha_defuncion_raw` | Text | Literal death-date text. |
 | `fecha_defuncion_factual` | Boolean | `True` if the date is documented directly. |
-| `documentos` | Text (`|`-delimited values) | Reference to `documento_idno` in `documentos.csv`. |
+| `documentos` | Text `\|`\-delimited values | Reference to `documento_idno` in `documentos.csv`. |
 | `notas` | Text | Additional or clarifying notes entered by the transcriber for the event associated with the non-enslaved person. |
 
 ---
@@ -161,8 +161,8 @@ Each row represents a corporation or institution (church, convent, obraje, merch
 | `nombres_alternativos` | Text | Name variants of the institution. |
 | `tipo_institucion` | Text | Institution type. See `cv_tipos_institucion.csv`. |
 | `lugar_corporacion_id` | Integer | Place associated with the corporation. Reference to `lugar_id` in `lugares.csv`. |
-| `personas_asociadas` | Text (`|`-delimited values) | Persons associated with the corporation. Reference to `persona_idno` in `personas_esclavizadas.csv` or `personas_no_esclavizadas.csv`. |
-| `documentos` | Text (`|`-delimited values) | Documents in which the corporation appears. Reference to `documento_idno` in `documentos.csv`. |
+| `personas_asociadas` | Text `\|`\-delimited values | Persons associated with the corporation. Reference to `persona_idno` in `personas_esclavizadas.csv` or `personas_no_esclavizadas.csv`. |
+| `documentos` | Text `\|`\-delimited values | Documents in which the corporation appears. Reference to `documento_idno` in `documentos.csv`. |
 | `notas` | Text |  |
 
 ---

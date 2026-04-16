@@ -42,17 +42,17 @@ Cada fila representa a una persona esclavizada registrada en la base de datos. U
 | `altura` | Texto | Descripción de la altura de la persona tal como figura en el documento. |
 | `cabello` | Texto | Descripción del cabello de la persona tal como figura en el documento. |
 | `ojos` | Texto | Descripción de los ojos de la persona tal como figura en el documento. |
-| `calidades` | Texto (valores `|`\-delimitados) | Adscripción o adscripciones de calidad socioétnica de la persona. Ver `cv_calidades.csv`. |
-| `agencia/adaptacion` | Texto (valores `|`\-delimitados) | Nivel o niveles de agencia o adaptación registrados. Ver `cv_agencia_adaptacion.csv`. |
-| `etnonimos` | Texto (valores `|`\-delimitados) | Etnónimo o etnónimos asociados a la persona. Ver `cv_etnonimos.csv`. |
+| `calidades` | Texto (valores `\|`\-delimitados) | Adscripción o adscripciones de calidad socioétnica de la persona. Ver `cv_calidades.csv`. |
+| `agencia/adaptacion` | Texto (valores `\|`\-delimitados) | Nivel o niveles de agencia o adaptación registrados. Ver `cv_agencia_adaptacion.csv`. |
+| `etnonimos` | Texto (valores `\|`\-delimitados) | Etnónimo o etnónimos asociados a la persona. Ver `cv_etnonimos.csv`. |
 | `procedencia_lugar_id` | Numérico entero | Identificador del lugar de procedencia africana o de otro origen previo. Referencia a `lugar_id` en `lugares.csv`. |
 | `procedencia_adicional` | Texto | Información adicional de procedencia no capturada por el lugar (p. ej., nombre de barco o establecimiento). |
 | `marcas_corporales` | Texto | Descripción de marcas corporales, carimbos, cicatrices rituales u otras señas físicas. |
 | `conducta` | Texto | Informes de la conducta de la persona esclavizada indicados en el documento |
 | `salud` | Texto | Condición de salud temporal o permanente de la persona esclavizada al momento del evento. Puede incluir condición de embarazo. |
-| `ocupaciones` | Texto (valores `|`\-delimitados) | Ocupación u ocupaciones de la persona. Ver `cv_ocupaciones.csv`. |
+| `ocupaciones` | Texto (valores `\|`\-delimitados) | Ocupación u ocupaciones de la persona. Ver `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Texto | Categoría de la ocupación (p. ej., servicio doméstico, artesanía, obraje). |
-| `estado_matrimonial` | Texto (valores `|`\-delimitados) | Estado matrimonial de la persona. Ver `cv_estado_matrimonial.csv`. |
+| `estado_matrimonial` | Texto (valores `\|`\-delimitados) | Estado matrimonial de la persona. Ver `cv_estado_matrimonial.csv`. |
 | `lugar_nacimiento_id` | Numérico entero | Identificador del lugar de nacimiento. Referencia a `lugar_id` en `lugares.csv`. |
 | `fecha_nacimiento` | Fecha (ISO 8601\) | Fecha de nacimiento calculada. Ver [Convenciones de fechas](#convenciones-de-fechas). |
 | `fecha_nacimiento_raw` | Texto | Texto literal de la fecha de nacimiento en el documento. |
@@ -61,7 +61,7 @@ Cada fila representa a una persona esclavizada registrada en la base de datos. U
 | `fecha_defuncion` | Fecha (ISO 8601\) | Fecha de defunción calculada. |
 | `fecha_defuncion_raw` | Texto | Texto literal de la fecha de defunción en el documento. |
 | `fecha_defuncion_factual` | Booleano | `True` si la fecha está documentada directamente en la fuente. |
-| `documentos` | Texto (valores `|`\-delimitados) | Identificadores de los documentos en los que aparece la persona. Referencia a `documento_idno` en `documentos.csv`. |
+| `documentos` | Texto (valores `\|`\-delimitados) | Identificadores de los documentos en los que aparece la persona. Referencia a `documento_idno` en `documentos.csv`. |
 | `notas` | Texto | Notas adicionales o aclaratorias indicadas por el transcriptor del evento asociadas con la persona esclavizada. |
 
 ---
@@ -78,10 +78,10 @@ Cada fila representa a una persona no esclavizada asociada a uno o más eventos 
 | `nombre_normalizado` | Texto | Nombre completo normalizado. |
 | `sexo` | Texto | Sexo registrado. Valores: `v` (Varón), `m` (Mujer), `i` (Desconocido). |
 | `honorifico` | Texto | Honorífico asociado a la persona. Valores: `nan` (N/A), `don` (Don), `dna` (Doña), `doc` (Doctor), `fra` (Fray). |
-| `calidades` | Texto (valores `|`\-delimitados) | Adscripción o adscripciones de calidad socioétnica. Ver `cv_calidades.csv`. |
-| `ocupaciones` | Texto (valores `|`\-delimitados) | Ocupación u ocupaciones. Ver `cv_ocupaciones.csv`. |
+| `calidades` | Texto (valores `\|`\-delimitados) | Adscripción o adscripciones de calidad socioétnica. Ver `cv_calidades.csv`. |
+| `ocupaciones` | Texto (valores `\|`\-delimitados) | Ocupación u ocupaciones. Ver `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Texto | Categoría de la ocupación. |
-| `estado_matrimonial` | Texto (valores `|`\-delimitados) | Estado matrimonial. Ver `cv_estado_matrimonial.csv`. |
+| `estado_matrimonial` | Texto (valores `\|`\-delimitados) | Estado matrimonial. Ver `cv_estado_matrimonial.csv`. |
 | `entidad_asociada` | Texto | Corporación o institución con las que la persona está asociada. Referencia a `corporacion_idno` en `corporaciones.csv`. |
 | `lugar_nacimiento_id` | Numérico entero | Referencia a `lugar_id` en `lugares.csv`. |
 | `fecha_nacimiento` | Fecha (ISO 8601\) | Ver [Convenciones de fechas](#convenciones-de-fechas). |
@@ -91,7 +91,7 @@ Cada fila representa a una persona no esclavizada asociada a uno o más eventos 
 | `fecha_defuncion` | Fecha (ISO 8601\) |  |
 | `fecha_defuncion_raw` | Texto | Texto literal de la fecha de defunción. |
 | `fecha_defuncion_factual` | Booleano | `True` si la fecha está documentada directamente. |
-| `documentos` | Texto (valores `|`\-delimitados) | Referencia a `documento_idno` en `documentos.csv`. |
+| `documentos` | Texto (valores `\|`\-delimitados) | Referencia a `documento_idno` en `documentos.csv`. |
 | `notas` | Texto | Notas adicionales o aclaratorias indicadas por el transcriptor del evento asociadas con la persona no esclavizada. |
 
 ---
@@ -161,8 +161,8 @@ Cada fila representa a una corporación o institución (iglesia, convento, obraj
 | `nombres_alternativos` | Texto | Variantes del nombre de la institución. |
 | `tipo_institucion` | Texto | Tipo de institución. Ver `cv_tipos_institucion.csv`. |
 | `lugar_corporacion_id` | Numérico entero | Lugar asociado a la corporación. Referencia a `lugar_id` en `lugares.csv`. |
-| `personas_asociadas` | Texto (valores `|`\-delimitados) | Personas asociadas a la corporación. Referencia a `persona_idno` en `personas_esclavizadas.csv` o `personas_no_esclavizadas.csv`. |
-| `documentos` | Texto (valores `|`\-delimitados) | Documentos en los que aparece la corporación. Referencia a `documento_idno` en `documentos.csv`. |
+| `personas_asociadas` | Texto (valores `\|`\-delimitados) | Personas asociadas a la corporación. Referencia a `persona_idno` en `personas_esclavizadas.csv` o `personas_no_esclavizadas.csv`. |
+| `documentos` | Texto (valores `\|`\-delimitados) | Documentos en los que aparece la corporación. Referencia a `documento_idno` en `documentos.csv`. |
 | `notas` | Texto |  |
 
 ---
