@@ -23,7 +23,7 @@ services:
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
-      - ./backups:/backups
+      - ./backups:/app/backups
       - ./deposit:/app/deposit
     logging:
       driver: "json-file"
