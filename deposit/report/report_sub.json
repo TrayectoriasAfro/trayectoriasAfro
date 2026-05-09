@@ -1,161 +1,167 @@
 {
-    "nodes": 6904,
-    "edges": 6955,
-    "connected_components": 2505,
+    "nodes": 7372,
+    "edges": 8112,
+    "connected_components": 841,
     "lcc_size": {
-        "nodes": 465,
-        "fraction": 0.0674
+        "nodes": 1277,
+        "fraction": 0.1732
     },
-    "density": 0.0002918693385531573,
-    "average_degree": 2.014774044032445,
+    "density": 0.00014928501092364359,
+    "average_degree": 2.200759631036354,
     "clustering_coefficient": {
         "average_local": 0.0,
         "global_transitivity": 0
     },
-    "average_path_length": 10.96366332962551,
-    "diameter": 30,
+    "average_path_length": {
+        "value": 0,
+        "computed_on_nodes": 1
+    },
+    "diameter": {
+        "value": 0,
+        "computed_on_nodes": 1
+    },
     "degree_centrality": {
-        "mean": 0.00029186933855315734,
-        "std": 0.00020627794979986562,
-        "min": 0.00014486455164421265,
-        "max": 0.003911342894393741
+        "mean": 0.0002985700218472872,
+        "std": 0.0002716779172419837,
+        "min": 0.000135666802333469,
+        "max": 0.007461674128340795
     },
     "betweenness_centrality": {
-        "mean": 1.216272373731391e-05,
-        "std": 9.431881219331281e-05,
+        "mean": 0.0,
+        "std": 0.0,
         "min": 0.0,
-        "max": 0.0028676045617358798
+        "max": 0.0
     },
     "closeness_centrality": {
-        "mean": 0.0011123304879815659,
-        "std": 0.002161047093517751,
+        "mean": 0.00014928501092364359,
+        "std": 0.00023533601892571467,
         "min": 0.0,
-        "max": 0.01059530683729489
+        "max": 0.001763668430335097
     },
     "top_degree_central": [
         {
-            "persona": "mx-sv-per-003454",
-            "centrality": 0.003911
-        },
-        {
             "persona": "mx-sv-per-002059",
-            "centrality": 0.003622
-        },
-        {
-            "persona": "mx-sv-per-003005",
-            "centrality": 0.003187
+            "centrality": 0.007462
         },
         {
             "persona": "mx-sv-per-000636",
-            "centrality": 0.002897
+            "centrality": 0.004748
         },
         {
-            "persona": "mx-sv-per-002910",
-            "centrality": 0.002897
+            "persona": "mx-sv-per-003005",
+            "centrality": 0.004341
         },
         {
-            "persona": "mx-sv-per-002621",
-            "centrality": 0.002463
+            "persona": "mx-sv-per-003454",
+            "centrality": 0.00407
         },
         {
-            "persona": "mx-sv-per-003431",
-            "centrality": 0.002463
+            "persona": "mx-sv-per-000217",
+            "centrality": 0.00407
         },
         {
             "persona": "mx-sv-per-000812",
-            "centrality": 0.002318
+            "centrality": 0.002985
         },
         {
-            "persona": "mx-sv-per-002998",
-            "centrality": 0.002318
+            "persona": "mx-sv-per-002910",
+            "centrality": 0.002985
         },
         {
-            "persona": "mx-sv-per-003390",
-            "centrality": 0.002318
+            "persona": "mx-sv-per-000076",
+            "centrality": 0.002849
+        },
+        {
+            "persona": "mx-sv-per-002124",
+            "centrality": 0.002849
+        },
+        {
+            "persona": "mx-sv-per-002621",
+            "centrality": 0.002578
         }
     ],
     "top_betweenness_central": [
         {
-            "persona": "mx-sv-per-000636",
-            "centrality": 0.002868
+            "persona": "mx-sv-per-008525",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-003005",
-            "centrality": 0.002258
+            "persona": "mx-sv-per-008524",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-008202",
-            "centrality": 0.002097
+            "persona": "mx-sv-per-008526",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-003454",
-            "centrality": 0.001707
+            "persona": "mx-sv-per-008527",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-003453",
-            "centrality": 0.001524
+            "persona": "mx-sv-per-008505",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-001320",
-            "centrality": 0.001439
+            "persona": "mx-sv-per-008504",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-006148",
-            "centrality": 0.001323
+            "persona": "mx-sv-per-008506",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-000074",
-            "centrality": 0.001311
+            "persona": "mx-sv-per-003512",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-000076",
-            "centrality": 0.001298
+            "persona": "mx-sv-per-003510",
+            "centrality": 0.0
         },
         {
-            "persona": "mx-sv-per-000072",
-            "centrality": 0.001296
+            "persona": "mx-sv-per-003513",
+            "centrality": 0.0
         }
     ],
     "top_closeness_central": [
         {
-            "persona": "mx-sv-per-000636",
-            "centrality": 0.010595
+            "persona": "mx-sv-per-004947",
+            "centrality": 0.001764
         },
         {
-            "persona": "mx-sv-per-008202",
-            "centrality": 0.01053
+            "persona": "mx-sv-per-004948",
+            "centrality": 0.001764
         },
         {
-            "persona": "mx-sv-per-003005",
-            "centrality": 0.010324
+            "persona": "mx-sv-per-004949",
+            "centrality": 0.001764
         },
         {
-            "persona": "mx-sv-per-003453",
-            "centrality": 0.010051
+            "persona": "mx-sv-per-005968",
+            "centrality": 0.001492
         },
         {
-            "persona": "mx-sv-per-000808",
-            "centrality": 0.009931
+            "persona": "mx-sv-per-006970",
+            "centrality": 0.001357
         },
         {
-            "persona": "mx-sv-per-002075",
-            "centrality": 0.00991
+            "persona": "mx-sv-per-006971",
+            "centrality": 0.001357
         },
         {
-            "persona": "mx-sv-per-002080",
-            "centrality": 0.00991
+            "persona": "mx-sv-per-006982",
+            "centrality": 0.001357
         },
         {
-            "persona": "mx-sv-per-001320",
-            "centrality": 0.009889
+            "persona": "mx-sv-per-006993",
+            "centrality": 0.001357
         },
         {
-            "persona": "mx-sv-per-002211",
-            "centrality": 0.009725
+            "persona": "mx-sv-per-006994",
+            "centrality": 0.001357
         },
         {
-            "persona": "mx-sv-per-002212",
-            "centrality": 0.009725
+            "persona": "mx-sv-per-007162",
+            "centrality": 0.001357
         }
     ]
 }

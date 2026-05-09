@@ -12,8 +12,14 @@
         "average_local": 0.27904040404040403,
         "global_transitivity": 0.6942148760330579
     },
-    "average_path_length": 1.4166666666666667,
-    "diameter": 2,
+    "average_path_length": {
+        "value": 1.4166666666666667,
+        "computed_on_nodes": 9
+    },
+    "diameter": {
+        "value": 2,
+        "computed_on_nodes": 9
+    },
     "degree_centrality": {
         "mean": 0.02843822843822844,
         "std": 0.022455932548789206,
