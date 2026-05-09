@@ -9,4 +9,11 @@ dependencies = [
     "networkx>=3.6.1",
     "pandas>=3.0.2",
     "rustworkx>=0.17.1",
+    "scipy>=1.17.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "uv>=0.11.12",
 ]

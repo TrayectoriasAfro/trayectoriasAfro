@@ -12,3 +12,4 @@ deposit/*.py
 deposit/*.png
 deposit/*.csv
 deposit/2026-*
+deposit/.ipynb_checkpoints
