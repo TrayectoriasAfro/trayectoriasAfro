@@ -1,0 +1,167 @@
+{
+    "nodes": 302,
+    "edges": 409,
+    "connected_components": 86,
+    "lcc_size": {
+        "nodes": 13,
+        "fraction": 0.043
+    },
+    "density": 0.008998701898748102,
+    "average_degree": 2.7086092715231787,
+    "clustering_coefficient": {
+        "average_local": 0.5043046357615895,
+        "global_transitivity": 0.8892782060266293
+    },
+    "average_path_length": {
+        "value": 2.2564102564102564,
+        "computed_on_nodes": 13
+    },
+    "diameter": {
+        "value": 5,
+        "computed_on_nodes": 13
+    },
+    "degree_centrality": {
+        "mean": 0.008998701898748102,
+        "std": 0.007307759938321132,
+        "min": 0.0033222591362126247,
+        "max": 0.029900332225913623
+    },
+    "betweenness_centrality": {
+        "mean": 2.9922333942047486e-05,
+        "std": 0.0001050274013907972,
+        "min": 0.0,
+        "max": 0.0008283499446290144
+    },
+    "closeness_centrality": {
+        "mean": 0.010228683396096077,
+        "std": 0.007464778960434587,
+        "min": 0.0033222591362126247,
+        "max": 0.029900332225913623
+    },
+    "top_degree_central": [
+        {
+            "persona": "mx-sv-per-000928",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000929",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000933",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000921",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000922",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000923",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000924",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000925",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000926",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000927",
+            "centrality": 0.0299
+        }
+    ],
+    "top_betweenness_central": [
+        {
+            "persona": "mx-sv-per-000112",
+            "centrality": 0.000828
+        },
+        {
+            "persona": "mx-sv-per-007866",
+            "centrality": 0.000819
+        },
+        {
+            "persona": "mx-sv-per-003074",
+            "centrality": 0.000642
+        },
+        {
+            "persona": "mx-sv-per-003073",
+            "centrality": 0.000532
+        },
+        {
+            "persona": "mx-sv-per-000867",
+            "centrality": 0.000465
+        },
+        {
+            "persona": "mx-sv-per-001279",
+            "centrality": 0.000465
+        },
+        {
+            "persona": "mx-sv-per-001384",
+            "centrality": 0.000354
+        },
+        {
+            "persona": "mx-sv-per-000697",
+            "centrality": 0.000354
+        },
+        {
+            "persona": "mx-sv-per-003601",
+            "centrality": 0.000343
+        },
+        {
+            "persona": "mx-sv-per-003602",
+            "centrality": 0.000343
+        }
+    ],
+    "top_closeness_central": [
+        {
+            "persona": "mx-sv-per-000928",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000929",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000933",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000921",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000922",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000923",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000924",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000925",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000926",
+            "centrality": 0.0299
+        },
+        {
+            "persona": "mx-sv-per-000927",
+            "centrality": 0.0299
+        }
+    ]
+}
