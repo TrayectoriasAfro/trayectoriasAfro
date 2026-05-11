@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>TrayectoriasAfro Network Description</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="network_files/libs/clipboard/clipboard.min.js"></script>
+<script src="network_files/libs/quarto-html/quarto.js"></script>
+<script src="network_files/libs/quarto-html/popper.min.js"></script>
+<script src="network_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="network_files/libs/quarto-html/anchor.min.js"></script>
+<link href="network_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="network_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="network_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="network_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="network_files/libs/bootstrap/bootstrap-973236bd072d72a04ee9cd82dcc9cb29.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">TrayectoriasAfro Network Description</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>These are operations that help to describe the Trayectorias Afro network overall shape</p>
+<section id="dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies">Dependencies</h2>
+<div id="ed103a3f" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="helper-functions" class="level2">
+<h2 class="anchored" data-anchor-id="helper-functions">Helper functions</h2>
+<section id="design-notes" class="level3">
+<h3 class="anchored" data-anchor-id="design-notes">Design notes</h3>
+<section id="connected-component-strategy" class="level4">
+<h4 class="anchored" data-anchor-id="connected-component-strategy">Connected component strategy</h4>
+<p>Several metrics cannot be computed on the full graph and require a connected subgraph. Two different subgraphs are used depending on the metric:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Subgraph</th>
+<th>Function</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Largest (Weakly) Connected Component — LCC</strong></td>
+<td><code>_get_lcc</code></td>
+<td><code>lcc_size</code> — structural measure of overall reachability</td>
+</tr>
+<tr class="even">
+<td><strong>Largest <em>Strongly</em> Connected Component — LSCC</strong></td>
+<td><code>_get_lscc</code></td>
+<td><code>average_path_length</code>, <code>diameter</code> — require that every node can reach every other node via directed paths</td>
+</tr>
+</tbody>
+</table>
+<p>For <strong>undirected graphs</strong> both functions return the same thing (the standard LCC).<br>
+For <strong>directed graphs</strong> (e.g.&nbsp;<code>sub</code> relations), weak connectivity only guarantees a path exists if you ignore edge direction, so path-based metrics would raise <code>NetworkXError: Graph is not strongly connected</code>. The LSCC is used instead, and both <code>average_path_length</code> and <code>diameter</code> report <code>computed_on_nodes</code> alongside their value so it is always clear how much of the graph the metric actually covers.</p>
+</section>
+<section id="sujeto_col-semantics-pending-backend-rename" class="level4">
+<h4 class="anchored" data-anchor-id="sujeto_col-semantics-pending-backend-rename"><code>sujeto_col</code> semantics (pending backend rename)</h4>
+<p>In <code>relaciones_personas.csv</code>, the column <code>persona_sujeto_idno</code> currently stores the <strong>owner/enslaver</strong> (the dominant party), not the enslaved/subordinated person as the name might suggest. Until the upstream data is corrected, passing <code>sujeto_col='persona_sujeto_idno'</code> to <code>graph_description</code> treats that column as the <strong>edge source</strong> (owner → subject).</p>
+<div id="230c0fba" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> describe_cent(centrality_cal: <span class="bu">dict</span>, <span class="bu">all</span>: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Simple function, just to perform basic description and format the output to a dict"""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    keys <span class="op">=</span> []</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    values <span class="op">=</span> []</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k,v <span class="kw">in</span> centrality_cal.items():</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        keys.append(k)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        values.append(v)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    cent <span class="op">=</span> pd.DataFrame({<span class="st">'persona'</span>: keys, <span class="st">'centrality'</span>: values})</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    description <span class="op">=</span> cent.describe().to_dict()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">all</span>:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> description[<span class="st">'centrality'</span>]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'mean'</span>: description[<span class="st">'centrality'</span>].get(<span class="st">'mean'</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'std'</span>: description[<span class="st">'centrality'</span>].get(<span class="st">'std'</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'min'</span>: description[<span class="st">'centrality'</span>].get(<span class="st">'min'</span>),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'max'</span>: description[<span class="st">'centrality'</span>].get(<span class="st">'max'</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f982ce48" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Networkx helper functions</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>_STYLE <span class="op">=</span> <span class="st">'seaborn-v0_8-whitegrid'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> av_degree(G):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(<span class="bu">dict</span>(G.degree()).values()) <span class="op">/</span> G.number_of_nodes()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Degree histogram ---</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> degree_dist(G, subgroup: <span class="bu">str</span><span class="op">|</span><span class="va">None</span>, save: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>, report_dir: <span class="bu">str</span> <span class="op">=</span> <span class="st">'report'</span>):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    degree_sequence <span class="op">=</span> <span class="bu">sorted</span>([d <span class="cf">for</span> n, d <span class="kw">in</span> G.degree()], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    degreeCount <span class="op">=</span> collections.Counter(degree_sequence)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    deg, cnt <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>degreeCount.items())</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    suffix <span class="op">=</span> <span class="ss">f'_</span><span class="sc">{</span>subgroup<span class="sc">}</span><span class="ss">'</span> <span class="cf">if</span> subgroup <span class="cf">else</span> <span class="st">''</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> plt.style.context(_STYLE):</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        ax.bar(deg, cnt, color<span class="op">=</span><span class="st">'steelblue'</span>, edgecolor<span class="op">=</span><span class="st">'white'</span>, linewidth<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'Degree Distribution</span><span class="sc">{</span>suffix<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'Count (log scale)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">'Degree'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Only label ticks that are at least 2 apart to avoid clutter</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        max_deg <span class="op">=</span> <span class="bu">max</span>(deg)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        step <span class="op">=</span> <span class="bu">max</span>(<span class="dv">1</span>, max_deg <span class="op">//</span> <span class="dv">20</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        shown <span class="op">=</span> [d <span class="cf">for</span> d <span class="kw">in</span> deg <span class="cf">if</span> d <span class="op">%</span> step <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> d <span class="op">==</span> max_deg]</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        ax.set_xticks(shown)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        ax.set_xticklabels(shown, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        ax.yaxis.set_major_formatter(plt.FuncFormatter(<span class="kw">lambda</span> y, _: <span class="ss">f'</span><span class="sc">{</span><span class="bu">int</span>(y)<span class="sc">:,}</span><span class="ss">'</span>))</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        fig.tight_layout()</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> save:</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            Path(report_dir).mkdir(exist_ok<span class="op">=</span><span class="va">True</span>, parents<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            fig.savefig(Path(report_dir, <span class="ss">f'degree_histogram</span><span class="sc">{</span>suffix<span class="sc">}</span><span class="ss">.png'</span>), dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># --- CCDF plot ---</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> degree_ccdf(G, subgroup: <span class="bu">str</span><span class="op">|</span><span class="va">None</span>, save: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>, report_dir: <span class="bu">str</span> <span class="op">=</span> <span class="st">'report'</span>):</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    degrees <span class="op">=</span> np.array(<span class="bu">sorted</span>([d <span class="cf">for</span> n, d <span class="kw">in</span> G.degree()]))</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(degrees)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    unique_deg, counts <span class="op">=</span> np.unique(degrees, return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    cdf <span class="op">=</span> np.cumsum(counts) <span class="op">/</span> n          <span class="co"># P(X &lt;= k)</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    ccdf <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> cdf                       <span class="co"># P(X &gt; k)</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    suffix <span class="op">=</span> <span class="ss">f'_</span><span class="sc">{</span>subgroup<span class="sc">}</span><span class="ss">'</span> <span class="cf">if</span> subgroup <span class="cf">else</span> <span class="st">''</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> plt.style.context(_STYLE):</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        ax.plot(unique_deg, ccdf, marker<span class="op">=</span><span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>                linewidth<span class="op">=</span><span class="fl">1.2</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, markerfacecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        ax.set_xscale(<span class="st">'log'</span>)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'Degree CCDF</span><span class="sc">{</span>suffix<span class="sc">}</span><span class="ss">  $P(X &gt; k)$'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'$P(X &gt; k)$'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">'Degree $k$ (log scale)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        ax.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">'both'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        fig.tight_layout()</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> save:</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            Path(report_dir).mkdir(exist_ok<span class="op">=</span><span class="va">True</span>, parents<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>            fig.savefig(Path(report_dir, <span class="ss">f'degree_ccdf</span><span class="sc">{</span>suffix<span class="sc">}</span><span class="ss">.png'</span>), dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _get_lcc(G):</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Largest weakly/undirected connected component — used for lcc_size."""</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> G.is_directed():</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>        components <span class="op">=</span> nx.weakly_connected_components(G)</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>        components <span class="op">=</span> nx.connected_components(G)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> G.subgraph(<span class="bu">max</span>(components, key<span class="op">=</span><span class="bu">len</span>)).copy()</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _get_lscc(G):</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Largest strongly connected component for DiGraphs, or LCC for undirected.</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="co">    Required by average_path_length and diameter, which need full reachability."""</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> G.is_directed():</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        components <span class="op">=</span> nx.strongly_connected_components(G)</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        components <span class="op">=</span> nx.connected_components(G)</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> G.subgraph(<span class="bu">max</span>(components, key<span class="op">=</span><span class="bu">len</span>)).copy()</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> av_path_lenght(G):</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    G_sub <span class="op">=</span> _get_lscc(G)</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">'value'</span>: nx.average_shortest_path_length(G_sub),</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>        <span class="st">'computed_on_nodes'</span>: G_sub.number_of_nodes(),</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lcc_size(G):</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    G_lcc <span class="op">=</span> _get_lcc(G)</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> G_lcc.number_of_nodes()</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'nodes'</span>: size, <span class="st">'fraction'</span>: <span class="bu">round</span>(size <span class="op">/</span> G.number_of_nodes(), <span class="dv">4</span>)}</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clustering_coeff(G):</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>        <span class="st">'average_local'</span>: nx.average_clustering(G),</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>        <span class="st">'global_transitivity'</span>: nx.transitivity(G)</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> diameter(G):</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>    G_sub <span class="op">=</span> _get_lscc(G)</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">'value'</span>: nx.diameter(G_sub),</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>        <span class="st">'computed_on_nodes'</span>: G_sub.number_of_nodes(),</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> top_central_nodes(centrality_cal: <span class="bu">dict</span>, n: <span class="bu">int</span> <span class="op">=</span> <span class="dv">10</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>    sorted_nodes <span class="op">=</span> <span class="bu">sorted</span>(centrality_cal.items(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [{<span class="st">'persona'</span>: k, <span class="st">'centrality'</span>: <span class="bu">round</span>(v, <span class="dv">6</span>)} <span class="cf">for</span> k, v <span class="kw">in</span> sorted_nodes[:n]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b2883cba" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> graph_description(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pr_df: pd.DataFrame, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    source: <span class="bu">str</span> <span class="op">=</span> <span class="st">'persona_idno_1'</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    target: <span class="bu">str</span> <span class="op">=</span> <span class="st">'persona_idno_2'</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    subgroup: <span class="bu">str</span><span class="op">|</span><span class="va">None</span> <span class="op">=</span> <span class="va">None</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    save: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    GraphType: <span class="bu">str</span> <span class="op">=</span> <span class="st">'NonDir'</span>, </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    report_dir: <span class="bu">str</span> <span class="op">=</span> <span class="st">'report'</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    n_central: <span class="bu">int</span> <span class="op">=</span> <span class="dv">10</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    sujeto_col: <span class="bu">str</span><span class="op">|</span><span class="va">None</span> <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">    sujeto_col: when building a directed graph, the column that identifies</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">                the dominant party (owner/enslaver). Used as the edge source.</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">                The other person (whichever of source/target is not sujeto_col)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">                becomes the edge target (enslaved/subordinated person).</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">                </span><span class="al">NOTE</span><span class="co">: to be renamed once the backend column name is corrected.</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> subgroup:</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        pr_df <span class="op">=</span> pr_df.loc[pr_df[<span class="st">'naturaleza_relacion'</span>] <span class="op">==</span> <span class="bu">str</span>(subgroup)].copy()</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> GraphType <span class="op">==</span> <span class="st">'Dir'</span>:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sujeto_col <span class="kw">and</span> sujeto_col <span class="kw">in</span> pr_df.columns:</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Drop rows with unknown dominant party</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            pr_df <span class="op">=</span> pr_df.dropna(subset<span class="op">=</span>[sujeto_col]).copy()</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Derive the other person: whichever of source/target is NOT sujeto_col</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            pr_df[<span class="st">'_other'</span>] <span class="op">=</span> pr_df.<span class="bu">apply</span>(</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                <span class="kw">lambda</span> r: r[target] <span class="cf">if</span> r[sujeto_col] <span class="op">==</span> r[source] <span class="cf">else</span> r[source],</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            G <span class="op">=</span> nx.from_pandas_edgelist(pr_df, sujeto_col, <span class="st">'_other'</span>, create_using<span class="op">=</span>nx.DiGraph())</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            G <span class="op">=</span> nx.from_pandas_edgelist(pr_df, source, target, create_using<span class="op">=</span>nx.DiGraph())</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        n_components <span class="op">=</span> nx.number_weakly_connected_components(G)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        G <span class="op">=</span> nx.from_pandas_edgelist(pr_df, source, target)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        n_components <span class="op">=</span> nx.number_connected_components(G)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    density <span class="op">=</span> nx.density(G)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    degree_dist(G, subgroup, save, report_dir)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    degree_ccdf(G, subgroup, save, report_dir)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute centralities once</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    dc <span class="op">=</span> nx.degree_centrality(G)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    bc <span class="op">=</span> nx.betweenness_centrality(G)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    cc <span class="op">=</span> nx.closeness_centrality(G)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    report <span class="op">=</span> {</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        <span class="st">'nodes'</span>: <span class="bu">len</span>(G),</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">'edges'</span>: G.number_of_edges(),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">'connected_components'</span>: n_components,</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">'lcc_size'</span>: lcc_size(G),</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">'density'</span>: density,</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">'average_degree'</span>: av_degree(G),</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">'clustering_coefficient'</span>: clustering_coeff(G),</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">'average_path_length'</span>: av_path_lenght(G),</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">'diameter'</span>: diameter(G),</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">'degree_centrality'</span>: describe_cent(dc),</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">'betweenness_centrality'</span>: describe_cent(bc),</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">'closeness_centrality'</span>: describe_cent(cc),</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">'top_degree_central'</span>: top_central_nodes(dc, n_central),</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">'top_betweenness_central'</span>: top_central_nodes(bc, n_central),</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">'top_closeness_central'</span>: top_central_nodes(cc, n_central),</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> save:</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        Path(report_dir).mkdir(exist_ok<span class="op">=</span><span class="va">True</span>, parents<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> subgroup:</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>            filename <span class="op">=</span> Path(report_dir, <span class="ss">f'report_</span><span class="sc">{</span>subgroup<span class="sc">}</span><span class="ss">.json'</span>)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>            filename <span class="op">=</span> Path(report_dir, <span class="st">'report.json'</span>)</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">'w'</span>) <span class="im">as</span> f:</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>            json.dump(report, f, ensure_ascii<span class="op">=</span><span class="va">False</span>, indent<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> report</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<div id="54830f8c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>deposit_data <span class="op">=</span> <span class="st">'2026-05-08'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>network_data <span class="op">=</span> <span class="st">'relaciones_personas.csv'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(Path(deposit_data, network_data))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>data.info(verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 9701 entries, 0 to 9700
+Data columns (total 7 columns):
+ #   Column                Non-Null Count  Dtype
+---  ------                --------------  -----
+ 0   persona_idno_1        9701 non-null   str  
+ 1   persona_idno_2        9701 non-null   str  
+ 2   persona_relacion_id   9701 non-null   int64
+ 3   documento_idno        9701 non-null   str  
+ 4   naturaleza_relacion   9701 non-null   str  
+ 5   persona_sujeto_idno   8222 non-null   str  
+ 6   descripcion_relacion  1473 non-null   str  
+dtypes: int64(1), str(6)
+memory usage: 530.7 KB</code></pre>
+</div>
+</div>
+</section>
+<section id="overall-network-description" class="level2">
+<h2 class="anchored" data-anchor-id="overall-network-description">Overall Network Description</h2>
+<div id="6432d2a5" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>graph_description(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>{'nodes': 7572,
+ 'edges': 9301,
+ 'connected_components': 930,
+ 'lcc_size': {'nodes': 1280, 'fraction': 0.169},
+ 'density': 0.00032448586904335037,
+ 'average_degree': 2.4566825145272055,
+ 'clustering_coefficient': {'average_local': 0.21000243275883074,
+  'global_transitivity': 0.2942205014519},
+ 'average_path_length': {'value': 10.289683102032837,
+  'computed_on_nodes': 1280},
+ 'diameter': {'value': 32, 'computed_on_nodes': 1280},
+ 'degree_centrality': {'mean': 0.0003244858690433503,
+  'std': 0.000291821484745911,
+  'min': 0.0001320829480914014,
+  'max': 0.0073966450931184785},
+ 'betweenness_centrality': {'mean': 6.4350781229643e-05,
+  'std': 0.00029894063368996013,
+  'min': 0.0,
+  'max': 0.009446102796481034},
+ 'closeness_centrality': {'mean': 0.005471467879984085,
+  'std': 0.007475524714724416,
+  'min': 0.0001320829480914014,
+  'max': 0.026774064670233723},
+ 'top_degree_central': [{'persona': 'mx-sv-per-002059',
+   'centrality': 0.007397},
+  {'persona': 'mx-sv-per-000636', 'centrality': 0.004623},
+  {'persona': 'mx-sv-per-003005', 'centrality': 0.004227},
+  {'persona': 'mx-sv-per-003454', 'centrality': 0.003962},
+  {'persona': 'mx-sv-per-000217', 'centrality': 0.003962},
+  {'persona': 'mx-sv-per-000076', 'centrality': 0.002906},
+  {'persona': 'mx-sv-per-000812', 'centrality': 0.002906},
+  {'persona': 'mx-sv-per-002910', 'centrality': 0.002906},
+  {'persona': 'mx-sv-per-000112', 'centrality': 0.002774},
+  {'persona': 'mx-sv-per-002124', 'centrality': 0.002774}],
+ 'top_betweenness_central': [{'persona': 'mx-sv-per-003005',
+   'centrality': 0.009446},
+  {'persona': 'mx-sv-per-000636', 'centrality': 0.009108},
+  {'persona': 'mx-sv-per-003454', 'centrality': 0.005843},
+  {'persona': 'mx-sv-per-000657', 'centrality': 0.004581},
+  {'persona': 'mx-sv-per-002059', 'centrality': 0.004525},
+  {'persona': 'mx-sv-per-001053', 'centrality': 0.003982},
+  {'persona': 'mx-sv-per-002910', 'centrality': 0.003908},
+  {'persona': 'mx-sv-per-000812', 'centrality': 0.003871},
+  {'persona': 'mx-sv-per-000039', 'centrality': 0.00363},
+  {'persona': 'mx-sv-per-007067', 'centrality': 0.00341}],
+ 'top_closeness_central': [{'persona': 'mx-sv-per-003005',
+   'centrality': 0.026774},
+  {'persona': 'mx-sv-per-003454', 'centrality': 0.025339},
+  {'persona': 'mx-sv-per-008202', 'centrality': 0.025086},
+  {'persona': 'mx-sv-per-008166', 'centrality': 0.024688},
+  {'persona': 'mx-sv-per-008428', 'centrality': 0.02457},
+  {'persona': 'mx-sv-per-007067', 'centrality': 0.024528},
+  {'persona': 'mx-sv-per-003453', 'centrality': 0.024242},
+  {'persona': 'mx-sv-per-007455', 'centrality': 0.024163},
+  {'persona': 'mx-sv-per-004028', 'centrality': 0.024112},
+  {'persona': 'mx-sv-per-007466', 'centrality': 0.02397}]}</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="network_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="network_files/figure-html/cell-7-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="familial-network" class="level1">
+<h1>Familial network</h1>
+<div id="7b8d0088" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>graph_description(data, subgroup<span class="op">=</span><span class="st">'fam'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>{'nodes': 1423,
+ 'edges': 1014,
+ 'connected_components': 615,
+ 'lcc_size': {'nodes': 8, 'fraction': 0.0056},
+ 'density': 0.001002220897788294,
+ 'average_degree': 1.4251581166549543,
+ 'clustering_coefficient': {'average_local': 0.23158652076431416,
+  'global_transitivity': 0.9327485380116959},
+ 'average_path_length': {'value': 1.2142857142857142, 'computed_on_nodes': 8},
+ 'diameter': {'value': 2, 'computed_on_nodes': 8},
+ 'degree_centrality': {'mean': 0.0010022208977882943,
+  'std': 0.0006432559572851891,
+  'min': 0.0007032348804500703,
+  'max': 0.004922644163150493},
+ 'betweenness_centrality': {'mean': 5.494883796120688e-08,
+  'std': 3.3675973949625475e-07,
+  'min': 0.0,
+  'max': 5.9386478292757515e-06},
+ 'closeness_centrality': {'mean': 0.0010256739174518514,
+  'std': 0.0006453024794877157,
+  'min': 0.0007032348804500703,
+  'max': 0.004922644163150493},
+ 'top_degree_central': [{'persona': 'mx-sv-per-001762',
+   'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001856', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001857', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001858', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001860', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001852', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001853', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001854', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001855', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001763', 'centrality': 0.004219}],
+ 'top_betweenness_central': [{'persona': 'mx-sv-per-001762',
+   'centrality': 6e-06},
+  {'persona': 'mx-sv-per-003642', 'centrality': 5e-06},
+  {'persona': 'mx-sv-per-002920', 'centrality': 3e-06},
+  {'persona': 'mx-sv-per-006227', 'centrality': 3e-06},
+  {'persona': 'mx-sv-per-006230', 'centrality': 3e-06},
+  {'persona': 'mx-sv-per-008092', 'centrality': 2e-06},
+  {'persona': 'mx-sv-per-001288', 'centrality': 2e-06},
+  {'persona': 'mx-sv-per-003540', 'centrality': 2e-06},
+  {'persona': 'mx-sv-per-000941', 'centrality': 2e-06},
+  {'persona': 'mx-sv-per-002699', 'centrality': 2e-06}],
+ 'top_closeness_central': [{'persona': 'mx-sv-per-001762',
+   'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001856', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001857', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001858', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001860', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001852', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001853', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001854', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001855', 'centrality': 0.004923},
+  {'persona': 'mx-sv-per-001763', 'centrality': 0.004307}]}</code></pre>
+</div>
+</div>
+<section id="subordinate" class="level2">
+<h2 class="anchored" data-anchor-id="subordinate">Subordinate</h2>
+<div id="d8d677d5" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>graph_description(data, subgroup<span class="op">=</span><span class="st">'sub'</span>, GraphType<span class="op">=</span><span class="st">'Dir'</span>, sujeto_col<span class="op">=</span><span class="st">'persona_sujeto_idno'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>{'nodes': 7372,
+ 'edges': 8112,
+ 'connected_components': 841,
+ 'lcc_size': {'nodes': 1277, 'fraction': 0.1732},
+ 'density': 0.00014928501092364359,
+ 'average_degree': 2.200759631036354,
+ 'clustering_coefficient': {'average_local': 0.0, 'global_transitivity': 0},
+ 'average_path_length': {'value': 0, 'computed_on_nodes': 1},
+ 'diameter': {'value': 0, 'computed_on_nodes': 1},
+ 'degree_centrality': {'mean': 0.0002985700218472872,
+  'std': 0.0002716779172419837,
+  'min': 0.000135666802333469,
+  'max': 0.007461674128340795},
+ 'betweenness_centrality': {'mean': 0.0, 'std': 0.0, 'min': 0.0, 'max': 0.0},
+ 'closeness_centrality': {'mean': 0.00014928501092364359,
+  'std': 0.00023533601892571467,
+  'min': 0.0,
+  'max': 0.001763668430335097},
+ 'top_degree_central': [{'persona': 'mx-sv-per-002059',
+   'centrality': 0.007462},
+  {'persona': 'mx-sv-per-000636', 'centrality': 0.004748},
+  {'persona': 'mx-sv-per-003005', 'centrality': 0.004341},
+  {'persona': 'mx-sv-per-003454', 'centrality': 0.00407},
+  {'persona': 'mx-sv-per-000217', 'centrality': 0.00407},
+  {'persona': 'mx-sv-per-000812', 'centrality': 0.002985},
+  {'persona': 'mx-sv-per-002910', 'centrality': 0.002985},
+  {'persona': 'mx-sv-per-000076', 'centrality': 0.002849},
+  {'persona': 'mx-sv-per-002124', 'centrality': 0.002849},
+  {'persona': 'mx-sv-per-002621', 'centrality': 0.002578}],
+ 'top_betweenness_central': [{'persona': 'mx-sv-per-008525',
+   'centrality': 0.0},
+  {'persona': 'mx-sv-per-008524', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-008526', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-008527', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-008505', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-008504', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-008506', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-003512', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-003510', 'centrality': 0.0},
+  {'persona': 'mx-sv-per-003513', 'centrality': 0.0}],
+ 'top_closeness_central': [{'persona': 'mx-sv-per-004947',
+   'centrality': 0.001764},
+  {'persona': 'mx-sv-per-004948', 'centrality': 0.001764},
+  {'persona': 'mx-sv-per-004949', 'centrality': 0.001764},
+  {'persona': 'mx-sv-per-005968', 'centrality': 0.001492},
+  {'persona': 'mx-sv-per-006970', 'centrality': 0.001357},
+  {'persona': 'mx-sv-per-006971', 'centrality': 0.001357},
+  {'persona': 'mx-sv-per-006982', 'centrality': 0.001357},
+  {'persona': 'mx-sv-per-006993', 'centrality': 0.001357},
+  {'persona': 'mx-sv-per-006994', 'centrality': 0.001357},
+  {'persona': 'mx-sv-per-007162', 'centrality': 0.001357}]}</code></pre>
+</div>
+</div>
+</section>
+<section id="temp" class="level2">
+<h2 class="anchored" data-anchor-id="temp">Temp</h2>
+<div id="c431dd62" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>graph_description(data, subgroup<span class="op">=</span><span class="st">'tmp'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>{'nodes': 248,
+ 'edges': 349,
+ 'connected_components': 73,
+ 'lcc_size': {'nodes': 10, 'fraction': 0.0403},
+ 'density': 0.011394802141831004,
+ 'average_degree': 2.814516129032258,
+ 'clustering_coefficient': {'average_local': 0.5675403225806451,
+  'global_transitivity': 0.9298107255520505},
+ 'average_path_length': {'value': 1.0, 'computed_on_nodes': 10},
+ 'diameter': {'value': 1, 'computed_on_nodes': 10},
+ 'degree_centrality': {'mean': 0.011394802141831006,
+  'std': 0.00917836670009958,
+  'min': 0.004048582995951417,
+  'max': 0.03643724696356275},
+ 'betweenness_centrality': {'mean': 2.0970237128256095e-05,
+  'std': 7.456584988416167e-05,
+  'min': 0.0,
+  'max': 0.0005266449425627859},
+ 'closeness_centrality': {'mean': 0.012261052376149936,
+  'std': 0.009085337887999428,
+  'min': 0.004048582995951417,
+  'max': 0.03643724696356275},
+ 'top_degree_central': [{'persona': 'mx-sv-per-000928',
+   'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000929', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000933', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000921', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000922', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000923', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000924', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000925', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000926', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000927', 'centrality': 0.036437}],
+ 'top_betweenness_central': [{'persona': 'mx-sv-per-007866',
+   'centrality': 0.000527},
+  {'persona': 'mx-sv-per-004124', 'centrality': 0.000428},
+  {'persona': 'mx-sv-per-000867', 'centrality': 0.000395},
+  {'persona': 'mx-sv-per-003073', 'centrality': 0.000395},
+  {'persona': 'mx-sv-per-003074', 'centrality': 0.000362},
+  {'persona': 'mx-sv-per-001384', 'centrality': 0.000329},
+  {'persona': 'mx-sv-per-004122', 'centrality': 0.000296},
+  {'persona': 'mx-sv-per-004123', 'centrality': 0.000296},
+  {'persona': 'mx-sv-per-000963', 'centrality': 0.00023},
+  {'persona': 'mx-sv-per-001385', 'centrality': 0.000197}],
+ 'top_closeness_central': [{'persona': 'mx-sv-per-000928',
+   'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000929', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000933', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000921', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000922', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000923', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000924', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000925', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000926', 'centrality': 0.036437},
+  {'persona': 'mx-sv-per-000927', 'centrality': 0.036437}]}</code></pre>
+</div>
+</div>
+</section>
+<section id="associative" class="level2">
+<h2 class="anchored" data-anchor-id="associative">Associative</h2>
+<div id="2ad956e4" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>graph_description(data, subgroup<span class="op">=</span><span class="st">'aso'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>{'nodes': 66,
+ 'edges': 61,
+ 'connected_components': 23,
+ 'lcc_size': {'nodes': 9, 'fraction': 0.1364},
+ 'density': 0.02843822843822844,
+ 'average_degree': 1.8484848484848484,
+ 'clustering_coefficient': {'average_local': 0.27904040404040403,
+  'global_transitivity': 0.6942148760330579},
+ 'average_path_length': {'value': 1.4166666666666667, 'computed_on_nodes': 9},
+ 'diameter': {'value': 2, 'computed_on_nodes': 9},
+ 'degree_centrality': {'mean': 0.02843822843822844,
+  'std': 0.022455932548789206,
+  'min': 0.015384615384615385,
+  'max': 0.12307692307692308},
+ 'betweenness_centrality': {'mean': 0.00024038461538461537,
+  'std': 0.0007888583212907374,
+  'min': 0.0,
+  'max': 0.005288461538461539},
+ 'closeness_centrality': {'mean': 0.033005474194285386,
+  'std': 0.025355493370831386,
+  'min': 0.015384615384615385,
+  'max': 0.12307692307692308},
+ 'top_degree_central': [{'persona': 'mx-sv-per-003390',
+   'centrality': 0.123077},
+  {'persona': 'mx-sv-per-003431', 'centrality': 0.107692},
+  {'persona': 'mx-sv-per-003432', 'centrality': 0.076923},
+  {'persona': 'mx-sv-per-003379', 'centrality': 0.076923},
+  {'persona': 'mx-sv-per-003380', 'centrality': 0.076923},
+  {'persona': 'mx-sv-per-003387', 'centrality': 0.076923},
+  {'persona': 'mx-sv-per-000016', 'centrality': 0.046154},
+  {'persona': 'mx-sv-per-000806', 'centrality': 0.046154},
+  {'persona': 'mx-sv-per-003376', 'centrality': 0.046154},
+  {'persona': 'mx-sv-per-003377', 'centrality': 0.046154}],
+ 'top_betweenness_central': [{'persona': 'mx-sv-per-003390',
+   'centrality': 0.005288},
+  {'persona': 'mx-sv-per-000806', 'centrality': 0.002404},
+  {'persona': 'mx-sv-per-003431', 'centrality': 0.001923},
+  {'persona': 'mx-sv-per-000016', 'centrality': 0.001683},
+  {'persona': 'mx-sv-per-000671', 'centrality': 0.001442},
+  {'persona': 'mx-sv-per-002621', 'centrality': 0.000962},
+  {'persona': 'mx-sv-per-000002', 'centrality': 0.000481},
+  {'persona': 'mx-sv-per-000003', 'centrality': 0.000481},
+  {'persona': 'mx-sv-per-000821', 'centrality': 0.000481},
+  {'persona': 'mx-sv-per-003600', 'centrality': 0.000481}],
+ 'top_closeness_central': [{'persona': 'mx-sv-per-003390',
+   'centrality': 0.123077},
+  {'persona': 'mx-sv-per-003431', 'centrality': 0.109402},
+  {'persona': 'mx-sv-per-003432', 'centrality': 0.08951},
+  {'persona': 'mx-sv-per-003379', 'centrality': 0.08951},
+  {'persona': 'mx-sv-per-003380', 'centrality': 0.08951},
+  {'persona': 'mx-sv-per-003387', 'centrality': 0.08951},
+  {'persona': 'mx-sv-per-003376', 'centrality': 0.07574},
+  {'persona': 'mx-sv-per-003377', 'centrality': 0.07574},
+  {'persona': 'mx-sv-per-003378', 'centrality': 0.065641},
+  {'persona': 'mx-sv-per-000016', 'centrality': 0.049231}]}</code></pre>
+</div>
+</div>
+</section>
+<section id="tmp-and-aso-joined" class="level2">
+<h2 class="anchored" data-anchor-id="tmp-and-aso-joined">TMP and ASO joined</h2>
+<p>Associative relationships are just a few. It makes sense to put them together.</p>
+<div id="a76d5c5c" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data_tmp_aso <span class="op">=</span> data.loc[(data[<span class="st">'naturaleza_relacion'</span>] <span class="op">==</span> <span class="st">'aso'</span>) <span class="op">|</span> (data[<span class="st">'naturaleza_relacion'</span>] <span class="op">==</span> <span class="st">'tmp'</span>)]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>graph_description(data_tmp_aso, report_dir<span class="op">=</span><span class="st">'report/combined'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>{'nodes': 302,
+ 'edges': 409,
+ 'connected_components': 86,
+ 'lcc_size': {'nodes': 13, 'fraction': 0.043},
+ 'density': 0.008998701898748102,
+ 'average_degree': 2.7086092715231787,
+ 'clustering_coefficient': {'average_local': 0.5043046357615895,
+  'global_transitivity': 0.8892782060266293},
+ 'average_path_length': {'value': 2.2564102564102564, 'computed_on_nodes': 13},
+ 'diameter': {'value': 5, 'computed_on_nodes': 13},
+ 'degree_centrality': {'mean': 0.008998701898748102,
+  'std': 0.007307759938321132,
+  'min': 0.0033222591362126247,
+  'max': 0.029900332225913623},
+ 'betweenness_centrality': {'mean': 2.9922333942047486e-05,
+  'std': 0.0001050274013907972,
+  'min': 0.0,
+  'max': 0.0008283499446290144},
+ 'closeness_centrality': {'mean': 0.010228683396096077,
+  'std': 0.007464778960434587,
+  'min': 0.0033222591362126247,
+  'max': 0.029900332225913623},
+ 'top_degree_central': [{'persona': 'mx-sv-per-000928', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000929', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000933', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000921', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000922', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000923', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000924', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000925', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000926', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000927', 'centrality': 0.0299}],
+ 'top_betweenness_central': [{'persona': 'mx-sv-per-000112',
+   'centrality': 0.000828},
+  {'persona': 'mx-sv-per-007866', 'centrality': 0.000819},
+  {'persona': 'mx-sv-per-003074', 'centrality': 0.000642},
+  {'persona': 'mx-sv-per-003073', 'centrality': 0.000532},
+  {'persona': 'mx-sv-per-000867', 'centrality': 0.000465},
+  {'persona': 'mx-sv-per-001279', 'centrality': 0.000465},
+  {'persona': 'mx-sv-per-001384', 'centrality': 0.000354},
+  {'persona': 'mx-sv-per-000697', 'centrality': 0.000354},
+  {'persona': 'mx-sv-per-003601', 'centrality': 0.000343},
+  {'persona': 'mx-sv-per-003602', 'centrality': 0.000343}],
+ 'top_closeness_central': [{'persona': 'mx-sv-per-000928',
+   'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000929', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000933', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000921', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000922', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000923', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000924', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000925', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000926', 'centrality': 0.0299},
+  {'persona': 'mx-sv-per-000927', 'centrality': 0.0299}]}</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
