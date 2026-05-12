@@ -1,6 +1,6 @@
 # Metadata Dictionary
 
-This dictionary documents all datasets in the data deposit for the project *The Circulation of Enslaved and Free Afro-descendants in New Spain*. Each section contains a description of the table's purpose and detailed documentation for each field, including the expected data type and a description.
+This dictionary documents all datasets in the data deposit for the project *The Movement of Enslaved and Free Afro-descendants in New Spain*. Each section contains a description of the table's purpose and detailed documentation for each field, including the expected data type and a description.
 
 ---
 
@@ -53,14 +53,9 @@ Each row represents an enslaved person recorded in the database. The same person
 | `ocupaciones` | Text `\|`\-delimited values | Occupation(s) of the person. See `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Text | Occupation category (e.g., domestic service, craft, obraje). |
 | `estado_matrimonial` | Text `\|`\-delimited values | Marital status of the person. See `cv_estado_matrimonial.csv`. |
-| `lugar_nacimiento_id` | Integer | Identifier of the place of birth. Reference to `lugar_id` in `lugares.csv`. |
 | `fecha_nacimiento` | Date (ISO 8601) | Computed date of birth. See [Date conventions](#date-conventions). |
 | `fecha_nacimiento_raw` | Text | Literal birth-date text in the document. |
 | `fecha_nacimiento_factual` | Boolean | `True` if the date is documented directly in the source. |
-| `lugar_defuncion_id` | Integer | Identifier of the place of death. Reference to `lugar_id` in `lugares.csv`. |
-| `fecha_defuncion` | Date (ISO 8601) | Computed date of death. |
-| `fecha_defuncion_raw` | Text | Literal death-date text in the document. |
-| `fecha_defuncion_factual` | Boolean | `True` if the date is documented directly in the source. |
 | `documentos` | Text `\|`\-delimited values | Identifiers of the documents in which the person appears. Reference to `documento_idno` in `documentos.csv`. |
 | `notas` | Text | Additional or clarifying notes entered by the transcriber for the event associated with the enslaved person. |
 
@@ -83,14 +78,7 @@ Each row represents a non-enslaved person associated with one or more documentar
 | `ocupacion_categoria` | Text | Occupation category. |
 | `estado_matrimonial` | Text `\|`\-delimited values | Marital status. See `cv_estado_matrimonial.csv`. |
 | `entidad_asociada` | Text | Corporation or institution the person is associated with. Reference to `corporacion_idno` in `corporaciones.csv`. |
-| `lugar_nacimiento_id` | Integer | Reference to `lugar_id` in `lugares.csv`. |
-| `fecha_nacimiento` | Date (ISO 8601) | See [Date conventions](#date-conventions). |
-| `fecha_nacimiento_raw` | Text | Literal birth-date text in the document. |
 | `fecha_nacimiento_factual` | Boolean | `True` if the date is documented directly. |
-| `lugar_defuncion_id` | Integer | Reference to `lugar_id` in `lugares.csv`. |
-| `fecha_defuncion` | Date (ISO 8601) |  |
-| `fecha_defuncion_raw` | Text | Literal death-date text. |
-| `fecha_defuncion_factual` | Boolean | `True` if the date is documented directly. |
 | `documentos` | Text `\|`\-delimited values | Reference to `documento_idno` in `documentos.csv`. |
 | `notas` | Text | Additional or clarifying notes entered by the transcriber for the event associated with the non-enslaved person. |
 
@@ -116,7 +104,6 @@ Each row represents a notarial or ecclesiastical document. Archive (physical rep
 | `tipo_documento` | Text | Document type (e.g., bill of sale, testament). See `cv_tipos_documentales.csv`. |
 | `sigla_documento` | Text | Location code of the document within the documentary unit. |
 | `titulo` | Text | Title or brief description of the document. |
-| `descripcion` | Text | Summary or extended description of the document's contents. |
 | `deteriorado` | Boolean | `True` if the document shows physical deterioration affecting legibility. |
 | `fecha_inicial` | Date (ISO 8601) | Start date of the document. See [Date conventions](#date-conventions). |
 | `fecha_inicial_raw` | Text | Literal start-date text in the document. |
@@ -124,12 +111,11 @@ Each row represents a notarial or ecclesiastical document. Archive (physical rep
 | `fecha_final` | Date (ISO 8601) | End date of the document (if it covers a range). |
 | `fecha_final_raw` | Text | Literal end-date text. |
 | `fecha_final_aproximada` | Boolean | `True` if the end date is approximate. |
-| `lugar_de_produccion_id` | Integer | Place where the document was produced. Reference to `lugar_id` in `lugares.csv`. |
 | `folio_inicial` | Text | First folio of the document within the documentary unit. |
 | `folio_final` | Text | Last folio of the document, if available. |
 | `evento_valor_sp` | Text | Value in pesos of the transaction recorded in the document, if applicable. |
-| `evento_forma_de_pago` | Text |  |
-| `evento_total` | Text |  |
+| `evento_forma_de_pago` | Text | Form of payment for the transaction (e.g., pesos de oro común, mercaderías, servicios, crédito). |
+| `evento_total` | Text | Total amount of the transaction; used when payment was made in installments or on credit. |
 | `notas` | Text | Additional or clarifying notes entered by the transcriber for the event associated with the document. |
 
 ---
@@ -142,9 +128,9 @@ Each row represents a unique geographic place mentioned in the documents. The ta
 | :---- | :---- | :---- |
 | `lugar_id` | Integer | Unique place identifier. Table primary key. Used as a foreign reference in all other tables. |
 | `nombre_lugar` | Text | Place name as used in the database (normalized form). |
-| `otros_nombres` | Text | Spelling variants or alternative names for the place, separated by line breaks. |
+| `otros_nombres` | Text | Alternative or historical names for the place. May be empty. |
+| `es_parte_de_lugar_id` | Integer | Parent place in the geographic hierarchy. Reference to `lugar_id` in this table. May be empty. |
 | `tipo` | Text | Type of geographic entity. See `cv_tipos_lugar.csv`. |
-| `es_parte_de_lugar_id` | Integer | `lugar_id` of the higher-level geographic entity this place belongs to (geographic hierarchy). Empty if it is the top-level entity. |
 | `lat` | Decimal | Latitude in decimal degrees (WGS 84). May be empty. |
 | `lon` | Decimal | Longitude in decimal degrees (WGS 84). May be empty. |
 
@@ -163,7 +149,7 @@ Each row represents a corporation or institution (church, convent, obraje, merch
 | `lugar_corporacion_id` | Integer | Place associated with the corporation. Reference to `lugar_id` in `lugares.csv`. |
 | `personas_asociadas` | Text `\|`\-delimited values | Persons associated with the corporation. Reference to `persona_idno` in `personas_esclavizadas.csv` or `personas_no_esclavizadas.csv`. |
 | `documentos` | Text `\|`\-delimited values | Documents in which the corporation appears. Reference to `documento_idno` in `documentos.csv`. |
-| `notas` | Text |  |
+| `notas` | Text | Additional or clarifying notes about the corporation or institution. |
 
 ---
 
@@ -179,13 +165,6 @@ Each row represents a trajectory point of a person at a specific place, as recor
 | `lugar_id` | Integer | Place of the trajectory. Reference to `lugares.csv`. |
 | `situacion_lugar` | Text | Person's situation relative to the place (e.g., vecino, residente, estante). See `cv_situaciones_lugar.csv`. |
 | `ordinal` | Integer | Position of this point in the person's itinerary sequence. Lower values are earlier in time. |
-| `fecha_inicial_lugar` | Date (ISO 8601) | Start date of the stay at the place. See [Date conventions](#date-conventions). |
-| `fecha_inicial_lugar_raw` | Text | Literal start-date text in the document. |
-| `fecha_inicial_lugar_factual` | Boolean | `True` if the date is documented directly. |
-| `fecha_final_lugar` | Date (ISO 8601) | End date of the stay at the place. |
-| `fecha_final_lugar_raw` | Text | Literal end-date text in the document. |
-| `fecha_final_lugar_factual` | Boolean | `True` if the date is documented directly. |
-| `notas` | Text |  |
 
 ---
 
@@ -200,14 +179,8 @@ Each row represents a direct link between two persons (P1 ↔ P2). The table is 
 | `persona_relacion_id` | Integer | Identifier of the original relationship record. Used to group pairs originating from the same relational event. |
 | `documento_idno` | Text | Document attesting the relationship. Reference to `documentos.csv`. |
 | `naturaleza_relacion` | Text | Relationship type. Values: `fam` (Family), `aso` (Associative), `tmp` (Temporal), `sub` (Subordination, Hierarchy) |
+| `persona_sujeto_idno` | Text | Identifier of the person who acts as the source of a directed relationship (e.g., parent in a parent–child relation, principal in a subordination). Reference to `persona_idno`. Empty for undirected relationships. |
 | `descripcion_relacion` | Text | Free-text description of the relationship as stated in the document. |
-| `fecha_inicial_relacion` | Date (ISO 8601) | See [Date conventions](#date-conventions). |
-| `fecha_inicial_relacion_raw` | Text | Literal start-date text in the document. |
-| `fecha_inicial_relacion_factual` | Boolean | `True` if the date is documented directly. |
-| `fecha_final_relacion` | Date (ISO 8601) | Computed end date of the relationship between the persons. |
-| `fecha_final_relacion_raw` | Text | Literal end-date text. |
-| `fecha_final_relacion_factual` | Boolean | `True` if the date is documented directly. |
-| `notas` | Text |  |
 
 ---
 
@@ -247,7 +220,6 @@ Socioethnic classifications (*calidades*) used in the historical documentation t
 | :---- | :---- | :---- |
 | `calidad_id` | Integer | Unique identifier. |
 | `calidad` | Text | *Calidad* term as normalized in the database. |
-| `descripcion` | Text |  |
 
 ### Ethnonyms — `cv_etnonimos.csv`
 
@@ -257,34 +229,6 @@ Ascriptions to African regions, ports, or ethnic groups, or ethnonyms used in th
 | :---- | :---- | :---- |
 | `etnonimo_id` | Integer | Unique identifier. |
 | `etnonimo` | Text | Ethnonym as normalized. |
-| `descripcion` | Text |  |
-
-### Agency / Adaptation — `cv_agencia_adaptacion.csv`
-
-Categories of level of hispanicization or acculturation of enslaved persons as they appear in the documents.
-
-| Property | Expected type | Description |
-| :---- | :---- | :---- |
-| `agencia_id` | Integer | Unique identifier. |
-| `agencia/adaptacion` | Text | Term (e.g., Bozal, Ladino, Criollo). |
-| `descripcion` | Text |  |
-
-### Occupations — `cv_ocupaciones.csv`
-
-Vocabulary of occupations.
-
-| Property | Expected type | Description |
-| :---- | :---- | :---- |
-| `ocupacion_id` | Integer | Unique identifier. |
-| `ocupacion` | Text | Occupation name. |
-| `descripcion` | Text |  |
-
-### Marital Status — `cv_estado_matrimonial.csv`
-
-| Property | Expected type | Description |
-| :---- | :---- | :---- |
-| `estado_matrimonial` | Text | Marital status (unique key). |
-| `descripcion` | Text |  |
 
 ### Document Types — `cv_tipos_documentales.csv`
 
@@ -293,7 +237,6 @@ Types of documentary subject or event (e.g., bill of sale, letter of freedom, te
 | Property | Expected type | Description |
 | :---- | :---- | :---- |
 | `tipo_documental` | Text | Document type name. |
-| `descripcion` | Text |  |
 
 ### Place Types — `cv_tipos_lugar.csv`
 
@@ -312,7 +255,6 @@ Situations of a person relative to a place during a trajectory.
 | :---- | :---- | :---- |
 | `situacion_id` | Integer | Unique identifier. |
 | `situacion` | Text | Situation term (e.g., vecino, residente, estante). |
-| `descripcion` | Text |  |
 
 ### Event Roles — `cv_roles_evento.csv`
 
@@ -321,7 +263,6 @@ Roles that persons and institutions can hold in a documentary event.
 | Property | Expected type | Description |
 | :---- | :---- | :---- |
 | `rol_evento` | Text | Role name (e.g., comprador, vendedor, testigo, notario). |
-| `descripcion` | Text |  |
 
 ### Institution Types — `cv_tipos_institucion.csv`
 
@@ -331,4 +272,29 @@ Types of corporation or institution.
 | :---- | :---- | :---- |
 | `tipo_id` | Integer | Unique identifier. |
 | `tipo` | Text | Institution type name. |
-| `descripcion` | Text |  |
+
+### Agency / Adaptation — `cv_agencia_adaptacion.csv`
+
+Levels of cultural adaptation or agency attributed to enslaved Africans and their descendants in colonial documentation (e.g., *bozal*, *ladino*, *criollo*).
+
+| Property | Expected type | Description |
+| :---- | :---- | :---- |
+| `agencia_id` | Integer | Unique identifier. |
+| `agencia/adaptacion` | Text | Agency/adaptation term as normalized in the database. |
+
+### Marital Status — `cv_estado_matrimonial.csv`
+
+Marital status values attributed to persons in the documents.
+
+| Property | Expected type | Description |
+| :---- | :---- | :---- |
+| `estado_matrimonial` | Text | Marital status term (e.g., casado/a, soltero/a, viudo/a). |
+
+### Occupations — `cv_ocupaciones.csv`
+
+Occupations recorded for enslaved and non-enslaved persons in the documents.
+
+| Property | Expected type | Description |
+| :---- | :---- | :---- |
+| `ocupacion_id` | Integer | Unique identifier. |
+| `ocupacion` | Text | Occupation term as normalized in the database. |

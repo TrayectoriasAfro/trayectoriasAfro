@@ -53,14 +53,9 @@ Cada fila representa a una persona esclavizada registrada en la base de datos. U
 | `ocupaciones` | Texto (valores `\|`\-delimitados) | Ocupación u ocupaciones de la persona. Ver `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Texto | Categoría de la ocupación (p. ej., servicio doméstico, artesanía, obraje). |
 | `estado_matrimonial` | Texto (valores `\|`\-delimitados) | Estado matrimonial de la persona. Ver `cv_estado_matrimonial.csv`. |
-| `lugar_nacimiento_id` | Numérico entero | Identificador del lugar de nacimiento. Referencia a `lugar_id` en `lugares.csv`. |
 | `fecha_nacimiento` | Fecha (ISO 8601\) | Fecha de nacimiento calculada. Ver [Convenciones de fechas](#convenciones-de-fechas). |
 | `fecha_nacimiento_raw` | Texto | Texto literal de la fecha de nacimiento en el documento. |
 | `fecha_nacimiento_factual` | Booleano | `True` si la fecha está documentada directamente en la fuente. |
-| `lugar_defuncion_id` | Numérico entero | Identificador del lugar de defunción. Referencia a `lugar_id` en `lugares.csv`. |
-| `fecha_defuncion` | Fecha (ISO 8601\) | Fecha de defunción calculada. |
-| `fecha_defuncion_raw` | Texto | Texto literal de la fecha de defunción en el documento. |
-| `fecha_defuncion_factual` | Booleano | `True` si la fecha está documentada directamente en la fuente. |
 | `documentos` | Texto (valores `\|`\-delimitados) | Identificadores de los documentos en los que aparece la persona. Referencia a `documento_idno` en `documentos.csv`. |
 | `notas` | Texto | Notas adicionales o aclaratorias indicadas por el transcriptor del evento asociadas con la persona esclavizada. |
 
@@ -83,14 +78,7 @@ Cada fila representa a una persona no esclavizada asociada a uno o más eventos 
 | `ocupacion_categoria` | Texto | Categoría de la ocupación. |
 | `estado_matrimonial` | Texto (valores `\|`\-delimitados) | Estado matrimonial. Ver `cv_estado_matrimonial.csv`. |
 | `entidad_asociada` | Texto | Corporación o institución con las que la persona está asociada. Referencia a `corporacion_idno` en `corporaciones.csv`. |
-| `lugar_nacimiento_id` | Numérico entero | Referencia a `lugar_id` en `lugares.csv`. |
-| `fecha_nacimiento` | Fecha (ISO 8601\) | Ver [Convenciones de fechas](#convenciones-de-fechas). |
-| `fecha_nacimiento_raw` | Texto | Texto literal de la fecha de nacimiento en el documento. |
 | `fecha_nacimiento_factual` | Booleano | `True` si la fecha está documentada directamente. |
-| `lugar_defuncion_id` | Numérico entero | Referencia a `lugar_id` en `lugares.csv`. |
-| `fecha_defuncion` | Fecha (ISO 8601\) |  |
-| `fecha_defuncion_raw` | Texto | Texto literal de la fecha de defunción. |
-| `fecha_defuncion_factual` | Booleano | `True` si la fecha está documentada directamente. |
 | `documentos` | Texto (valores `\|`\-delimitados) | Referencia a `documento_idno` en `documentos.csv`. |
 | `notas` | Texto | Notas adicionales o aclaratorias indicadas por el transcriptor del evento asociadas con la persona no esclavizada. |
 
@@ -116,7 +104,6 @@ Cada fila representa un documento notarial o eclesiástico. Los campos del archi
 | `tipo_documento` | Texto | Tipo documental del documento (p. ej., carta de venta, testamento). Ver `cv_tipos_documentales.csv`. |
 | `sigla_documento` | Texto | Sigla de ubicación del documento dentro de la unidad documental. |
 | `titulo` | Texto | Título o descripción breve del documento. |
-| `descripcion` | Texto | Resumen o descripción extendida del contenido del documento. |
 | `deteriorado` | Booleano | `True` si el documento presenta deterioro físico que afecta su legibilidad. |
 | `fecha_inicial` | Fecha (ISO 8601\) | Fecha inicial del documento. Ver [Convenciones de fechas](#convenciones-de-fechas). |
 | `fecha_inicial_raw` | Texto | Texto literal de la fecha inicial en el documento. |
@@ -124,12 +111,11 @@ Cada fila representa un documento notarial o eclesiástico. Los campos del archi
 | `fecha_final` | Fecha (ISO 8601\) | Fecha final del documento (si cubre un rango). |
 | `fecha_final_raw` | Texto | Texto literal de la fecha final. |
 | `fecha_final_aproximada` | Booleano | `True` si la fecha final es aproximada. |
-| `lugar_de_produccion_id` | Numérico entero | Lugar donde se produjo el documento. Referencia a `lugar_id` en `lugares.csv`. |
 | `folio_inicial` | Texto | Folio inicial del documento en la unidad documental. |
 | `folio_final` | Texto | Folio final del documento, si está disponible. |
 | `evento_valor_sp` | Texto | Valor en pesos de la transacción registrada en el documento, si aplica. |
-| `evento_forma_de_pago` | Texto |  |
-| `evento_total` | Texto |  |
+| `evento_forma_de_pago` | Texto | Forma de pago de la transacción (p. ej., pesos de oro común, mercaderías, servicios, crédito). |
+| `evento_total` | Texto | Monto total de la transacción; se usa cuando el pago se realizó en cuotas o a crédito. |
 | `notas` | Texto | Notas adicionales o aclaratorias indicadas por el transcriptor del evento asociadas con el documento o evento. |
 
 ---
@@ -142,9 +128,9 @@ Cada fila representa un lugar geográfico único mencionado en los documentos. L
 | :---- | :---- | :---- |
 | `lugar_id` | Numérico entero | Identificador único del lugar. Clave primaria de la tabla. Usado como referencia externa en todas las demás tablas. |
 | `nombre_lugar` | Texto | Nombre del lugar tal como se usa en la base de datos (forma normalizada). |
-| `otros_nombres` | Texto | Variantes ortográficas o nombres alternativos del lugar, separados por saltos de línea. |
+| `otros_nombres` | Texto | Nombres alternativos o históricos del lugar. Puede estar vacío. |
+| `es_parte_de_lugar_id` | Numérico entero | Lugar padre en la jerarquía geográfica. Referencia a `lugar_id` en esta misma tabla. Puede estar vacío. |
 | `tipo` | Texto | Tipo de entidad geográfica. Ver `cv_tipos_lugar.csv`. |
-| `es_parte_de_lugar_id` | Numérico entero | `lugar_id` de la entidad geográfica superior a la que pertenece este lugar (jerarquía geográfica). Vacío si es la entidad de mayor nivel. |
 | `lat` | Numérico decimal | Latitud en grados decimales (WGS 84). Puede estar vacía. |
 | `lon` | Numérico decimal | Longitud en grados decimales (WGS 84). Puede estar vacía. |
 
@@ -163,7 +149,7 @@ Cada fila representa a una corporación o institución (iglesia, convento, obraj
 | `lugar_corporacion_id` | Numérico entero | Lugar asociado a la corporación. Referencia a `lugar_id` en `lugares.csv`. |
 | `personas_asociadas` | Texto (valores `\|`\-delimitados) | Personas asociadas a la corporación. Referencia a `persona_idno` en `personas_esclavizadas.csv` o `personas_no_esclavizadas.csv`. |
 | `documentos` | Texto (valores `\|`\-delimitados) | Documentos en los que aparece la corporación. Referencia a `documento_idno` en `documentos.csv`. |
-| `notas` | Texto |  |
+| `notas` | Texto | Notas adicionales o aclaratorias sobre la corporación o institución. |
 
 ---
 
@@ -179,13 +165,6 @@ Cada fila representa un punto de trayectoria de una persona en un lugar específ
 | `lugar_id` | Numérico entero | Lugar de la trayectoria. Referencia a `lugares.csv`. |
 | `situacion_lugar` | Texto | Situación de la persona en relación con el lugar (p. ej., vecino, residente, estante). Ver `cv_situaciones_lugar.csv`. |
 | `ordinal` | Numérico entero | Posición de este punto en la secuencia del itinerario de la persona. Los valores más bajos son anteriores en el tiempo. |
-| `fecha_inicial_lugar` | Fecha (ISO 8601\) | Fecha inicial de la estancia en el lugar. Ver [Convenciones de fechas](#convenciones-de-fechas). |
-| `fecha_inicial_lugar_raw` | Texto | Texto literal de la fecha inicial en el documento. |
-| `fecha_inicial_lugar_factual` | Booleano | `True` si la fecha está documentada directamente. |
-| `fecha_final_lugar` | Fecha (ISO 8601\) | Fecha final de la estancia en el lugar. |
-| `fecha_final_lugar_raw` | Texto | Texto literal de la fecha final en el documento. |
-| `fecha_final_lugar_factual` | Booleano | `True` si la fecha está documentada directamente. |
-| `notas` | Texto |  |
 
 ---
 
@@ -200,14 +179,8 @@ Cada fila representa un vínculo directo entre dos personas (P1 ↔ P2). La tabl
 | `persona_relacion_id` | Numérico entero | Identificador del registro de relación original. Permite agrupar pares que provienen del mismo evento relacional. |
 | `documento_idno` | Texto | Documento en el que consta la relación. Referencia a `documentos.csv`. |
 | `naturaleza_relacion` | Texto | Tipo de relación. Valores: `fam` (Familiar), `aso` (Asociativa), `tmp` (Temporal), `sub` (Subordinación - Jerárquica). |
+| `persona_sujeto_idno` | Texto | Identificador de la persona que actúa como fuente de una relación dirigida (p. ej., padre o madre en una relación filial, superior en una relación de subordinación). Referencia a `persona_idno`. Vacío en relaciones no dirigidas. |
 | `descripcion_relacion` | Texto | Descripción libre de la relación tal como consta en el documento. |
-| `fecha_inicial_relacion` | Fecha (ISO 8601\) | Ver [Convenciones de fechas](#convenciones-de-fechas). |
-| `fecha_inicial_relacion_raw` | Texto | Texto literal de la fecha inicial en el documento. |
-| `fecha_inicial_relacion_factual` | Booleano | `True` si la fecha está documentada directamente. |
-| `fecha_final_relacion` | Fecha (ISO 8601\) | Fecha calculada del final de la relación entre las personas. |
-| `fecha_final_relacion_raw` | Texto | Texto literal de la fecha final. |
-| `fecha_final_relacion_factual` | Booleano | `True` si la fecha está documentada directamente. |
-| `notas` | Texto |  |
 
 ---
 
@@ -247,7 +220,6 @@ Adscripciones socioétnicas usadas en la documentación histórica para describi
 | :---- | :---- | :---- |
 | `calidad_id` | Numérico entero | Identificador único. |
 | `calidad` | Texto | Término de calidad tal como aparece normalizado en la base de datos. |
-| `descripcion` | Texto |  |
 
 ### Etnónimos — `cv_etnonimos.csv`
 
@@ -257,34 +229,6 @@ Adscripciones a regiones, puertos o etnias africanas, o etnónimos usados en la 
 | :---- | :---- | :---- |
 | `etnonimo_id` | Numérico entero | Identificador único. |
 | `etnonimo` | Texto | Etnónimo tal como aparece normalizado. |
-| `descripcion` | Texto |  |
-
-### Agencia / Adaptación — `cv_agencia_adaptacion.csv`
-
-Categorías de nivel de hispanización o aculturación de personas esclavizadas tal como aparecen en los documentos.
-
-| Propiedad | Tipo esperado | Descripción |
-| :---- | :---- | :---- |
-| `agencia_id` | Numérico entero | Identificador único. |
-| `agencia/adaptacion` | Texto | Término (p. ej., Bozal, Ladino, Criollo). |
-| `descripcion` | Texto |  |
-
-### Ocupaciones — `cv_ocupaciones.csv`
-
-Vocabulario de ocupaciones.
-
-| Propiedad | Tipo esperado | Descripción |
-| :---- | :---- | :---- |
-| `ocupacion_id` | Numérico entero | Identificador único. |
-| `ocupacion` | Texto | Nombre de la ocupación. |
-| `descripcion` | Texto |  |
-
-### Estado Matrimonial — `cv_estado_matrimonial.csv`
-
-| Propiedad | Tipo esperado | Descripción |
-| :---- | :---- | :---- |
-| `estado_matrimonial` | Texto | Estado matrimonial (clave única). |
-| `descripcion` | Texto |  |
 
 ### Tipos Documentales — `cv_tipos_documentales.csv`
 
@@ -293,7 +237,6 @@ Tipos de asunto o evento documental (p. ej., carta de venta, carta de libertad, 
 | Propiedad | Tipo esperado | Descripción |
 | :---- | :---- | :---- |
 | `tipo_documental` | Texto | Nombre del tipo documental. |
-| `descripcion` | Texto |  |
 
 ### Tipos de Lugar — `cv_tipos_lugar.csv`
 
@@ -312,7 +255,6 @@ Situaciones de una persona en relación con un lugar durante una trayectoria.
 | :---- | :---- | :---- |
 | `situacion_id` | Numérico entero | Identificador único. |
 | `situacion` | Texto | Término de situación (p. ej., vecino, residente, estante). |
-| `descripcion` | Texto |  |
 
 ### Roles de Evento — `cv_roles_evento.csv`
 
@@ -321,7 +263,6 @@ Roles que personas e instituciones pueden tener en un evento documental.
 | Propiedad | Tipo esperado | Descripción |
 | :---- | :---- | :---- |
 | `rol_evento` | Texto | Nombre del rol (p. ej., comprador, vendedor, testigo, notario). |
-| `descripcion` | Texto |  |
 
 ### Tipos de Institución — `cv_tipos_institucion.csv`
 
@@ -331,4 +272,29 @@ Tipos de corporación o institución.
 | :---- | :---- | :---- |
 | `tipo_id` | Numérico entero | Identificador único. |
 | `tipo` | Texto | Nombre del tipo de institución. |
-| `descripcion` | Texto |  |
+
+### Agencia / Adaptación — `cv_agencia_adaptacion.csv`
+
+Niveles de adaptación cultural o agencia atribuidos a africanos esclavizados y sus descendientes en la documentación colonial (p. ej., *bozal*, *ladino*, *criollo*).
+
+| Propiedad | Tipo esperado | Descripción |
+| :---- | :---- | :---- |
+| `agencia_id` | Numérico entero | Identificador único. |
+| `agencia/adaptacion` | Texto | Término de agencia/adaptación tal como aparece normalizado en la base de datos. |
+
+### Estado Matrimonial — `cv_estado_matrimonial.csv`
+
+Valores de estado matrimonial atribuidos a las personas en los documentos.
+
+| Propiedad | Tipo esperado | Descripción |
+| :---- | :---- | :---- |
+| `estado_matrimonial` | Texto | Término de estado matrimonial (p. ej., casado/a, soltero/a, viudo/a). |
+
+### Ocupaciones — `cv_ocupaciones.csv`
+
+Ocupaciones registradas para personas esclavizadas y no esclavizadas en los documentos.
+
+| Propiedad | Tipo esperado | Descripción |
+| :---- | :---- | :---- |
+| `ocupacion_id` | Numérico entero | Identificador único. |
+| `ocupacion` | Texto | Término de ocupación tal como aparece normalizado en la base de datos. |
