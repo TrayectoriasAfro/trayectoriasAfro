@@ -11,5 +11,5 @@ temp/
 deposit/*.py
 deposit/*.png
 deposit/*.csv
-deposit/2026-*
 deposit/.ipynb_checkpoints
+!deposit/2026-05-08/*

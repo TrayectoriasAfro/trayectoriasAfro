@@ -1,0 +1,340 @@
+lugar_id,nombre_lugar,otros_nombres,tipo,es_parte_de_lugar_id,lat,lon
+363,Barbados,,isla,,,
+151,Colima,,villa,,19.179530,-103.680110
+355,Tecolotlán,,villa,,20.100000,-103.833333
+360,Amula,,villa,,19.817000,-104.083000
+362,Tabasco,,estado,,18.000000,-92.666670
+5,Ulapa del Marquesado de Oaxaca,,pueblo,,,
+6,Nejapa,,pueblo,,16.605710,-95.978550
+7,Zimatlan,,pueblo,,16.869390,-96.784350
+8,Merida de Yucatan,,ciudad,,20.975370,-89.616960
+9,Guatemala,,region,,17.812500,-89.148611
+10,Cuicatlán,,pueblo,,18.227780,-98.285000
+11,Teococuilco,,pueblo,,17.352700,-96.615280
+12,Chalcatongo,,pueblo,,17.032470,-97.570570
+13,Miahuatlán,,pueblo,,18.549830,-97.439530
+14,Villa Alta de San Ildefonso,,pueblo,,,
+15,Villa del Marquesado del Valle,,villa,,23.850000,-104.233333
+16,San Juan Bautista,,pueblo,,18.088300,-96.125350
+17,Cádiz,,ciudad,,36.528429,-6.293573
+18,Tehuacán,,ciudad,,18.464220,-97.397350
+19,Lisboa,,ciudad,,19.694030,-101.145390
+20,"Amatlan, Veracruz",,pueblo,,21.335190,-97.757040
+21,Puebla,,estado,,19.051389,-98.217778
+22,Puebla,,ciudad,,19.051389,-98.217778
+23,Cholula,,ciudad,,19.061400,-98.306100
+24,Mexico,,ciudad,,19.419444,-99.145556
+25,Cabo Verde,,region,,19.172500,-96.299167
+26,Carrión,,ciudad,,21.737210,-101.518460
+27,Atlixco,,ciudad,,18.908150,-98.436130
+28,Tlaxcala,,ciudad,,19.428900,-98.160800
+29,Sevilla,,ciudad,,23.007360,-101.256910
+30,Acatzingo,,ciudad,,18.981960,-97.783630
+31,Tlalixcoyan,,pueblo,,18.802220,-96.060560
+32,Villa de Torres Novas,,villa,,39.491600,-8.547960
+33,"Torres Novas, Portugal",,villa,,39.491600,-8.547960
+34,"Xalapa, Veracruz",,ciudad,,19.531240,-96.915890
+35,Tlacolula,,ciudad,,16.955080,-96.469180
+36,Tlaxisco,,ciudad,,18.900240,-98.572090
+37,Castilla,,provincia,,19.458330,-101.301110
+38,Tepeaca,,ciudad,,18.986860,-97.884120
+39,Huejotzingo,,ciudad,,19.159450,-98.407340
+40,Huamantla,,ciudad,,19.314510,-97.925200
+41,México,,ciudad,,19.419444,-99.145556
+43,Santiago de Guatemala,,ciudad,,14.640720,-90.513270
+45,Panama,,pais,,18.594444,-95.907778
+46,Panama,,gobernacion,,18.594444,-95.907778
+59,Aguascalientes,,ciudad,,21.880833,-102.296111
+62,Villa de Nuestra Señora de la Asunción de las Aguascalientes,,villa,,,
+63,Calpan,,ciudad,,19.478570,-99.233670
+64,Sao Tomé,,ciudad,,-23.547500,-46.636110
+65,Nueva España,,region,,20.666667,-89.450000
+68,Tecamachalco,,ciudad,,18.861020,-97.746430
+69,Islas Canarias,,region,,28.000000,-15.500000
+70,Cartagena de Indias,,ciudad,,10.423611,-75.525278
+71,Terrenate,,ciudad,,19.484750,-97.914640
+72,Brasil,,estado,,19.415300,-99.213900
+73,Tlalnepantla,,ciudad,,19.540050,-99.195380
+74,Chiapa de la Real Corona,,ciudad,,,
+76,"Cordoba, España",,ciudad,,37.891550,-4.772750
+77,"Taboga, Panama",,isla,,8.783330,-79.558330
+78,Ixtepec,,ciudad,,16.449340,-95.093700
+79,Tustepeque,,pueblo,,,
+80,Coatlán,,pueblo,,18.744230,-99.433240
+81,Ejutla,,pueblo,,16.566230,-96.731230
+364,Hacienda de Santa Catarina mártir,,region,,,
+96,Colima ciudad (antes Villa de Colima),,ciudad,,19.179530,-103.680110
+356,Tierra Noba,,region,,,
+361,Caracas,,ciudad,,10.488010,-66.879190
+283,Zibu,Cebu,ciudad,157,10.293000,123.902000
+82,Juquila,,pueblo,,16.238190,-97.291610
+83,Teposcolula,,pueblo,,17.511250,-97.487910
+84,Tejupa,,pueblo,,18.855190,-98.541240
+85,Mixtepec,,pueblo,,16.095930,-97.082370
+86,Guadalajara,,ciudad,,20.676667,-103.347500
+87,Sosola,,pueblo,,17.379470,-97.026760
+88,Neap,,villa,,17.265650,-96.066380
+89,Nejapa,,villa,,16.563170,-95.993050
+90,Huajolotitlan,,pueblo,,17.827830,-97.732660
+91,Acatlán,,ciudad,,21.054444,-104.484444
+92,"San Salvador, Reino de Guatemala",,ciudad,,,
+93,Tabasco,,provincia,,17.989633,-92.928313
+94,Teotitlán del Camino,,pueblo,,18.131790,-97.070560
+97,Santa María Ozolotepec,,pueblo,,16.133020,-96.370880
+98,"Tepachula, Soconusco",,ciudad,,,
+99,Portugal,,region,,21.407500,-101.841110
+100,Otumba,,ciudad,,19.700000,-98.750000
+101,San Hipólito Martir,,provincia,,,
+102,Soconusco,,region,,15.315594,-92.726392
+103,"Santamaria, Castilla",,ciudad,,-3.595060,-71.736750
+104,Sinaloa y Sonora,,provincia,,,
+105,"Culiaca, reino de la Nueva Galicia",,villa,,,
+106,Tanechi,,pueblo,,,
+107,Santo Domingo,,isla,,16.318410,-95.247830
+108,Angola,,region,,17.792220,-91.269720
+109,"San Salvador de Arroniz, España",,villa,,,
+110,Yanhuitlán,,ciudad,,17.532830,-97.353320
+111,Autlán,,villa,,19.768220,-104.366640
+112,Hostotipaquillo,,real,,21.066667,-104.066667
+113,Guinea,,region,,20.004720,-96.621670
+114,Zacatecas,,ciudad,,22.771667,-102.575278
+115,La Rinconada,,pueblo,,15.593330,-92.268060
+117,África Occidental,,region,,18.312810,-4.833980
+118,Querétaro,,ciudad,,20.588056,-100.388056
+119,Fresnillo,,real,,23.171944,-102.860833
+120,Cocula,,villa,,20.386060,-103.826020
+121,Ocotitlán,,real,,19.227000,-98.857500
+122,Amilpas,,pueblo,,17.101880,-96.762280
+123,Ahualulco,,villa,,20.699280,-103.955640
+124,Cuidad Real de Chiapa,,ciudad,,,
+125,Ometepeque,,region,,,
+126,Jalacingo,,ciudad,,19.772990,-97.286180
+127,Santo Tomé,,isla,,16.854960,-96.659440
+128,Provincia de Ávalos,,provincia,,22.763890,-81.198060
+129,Jalostotitlán,,villa,,21.189120,-102.482340
+130,Amatlán del Río de Alvarado,,puerto,,,
+131,Mozambique,,region,,19.059444,-96.253611
+132,India de Portugal,,region,,38.694250,-9.212110
+133,Tepic,,villa,,21.509510,-104.895690
+134,Pinotepa del Rey,,ciudad,,,
+135,Isatlán,,real,,,
+136,Porto Rico,,ciudad,,16.715900,-93.934210
+137,Perú,,gobernacion,,16.098330,-92.936110
+365,Colotlán,,villa,,22.117222,-103.264722
+351,Minas de Izatlán [Etzatlán],,real,,,
+357,Tierra Casanga,,region,,,
+182,Biafra,,region,,6.450000,7.500000
+269,Banol,Casamance,region,113,12.556100,-16.762200
+138,Jora,,real,,27.164930,-107.721570
+139,Celaya,,villa,,20.523530,-100.815700
+141,Xalpantepeque,,pueblo,,,
+142,San Jacinto,,pueblo,,17.101880,-96.762280
+143,Salamanca,,villa,,20.571960,-101.191540
+144,San Felipe y Santiago de Sinaloa,,villa,,,
+145,Ahuacatlán,,villa,,21.045170,-104.541260
+147,Atzalán,,ciudad,,19.824720,-97.444170
+148,Santa María Nativitas,,pueblo,,19.579260,-99.609000
+149,Izúcar,,ciudad,,18.601570,-98.461520
+150,Ayutla,,pueblo,,16.963760,-99.096160
+152,Zacatula,,provincia,,16.779120,-99.090060
+153,Tlacoatzintepec,,pueblo,,17.859850,-96.586470
+154,Habana,,ciudad,,22.611520,-102.154510
+155,Mérida,,ciudad,,20.970000,-89.620000
+156,Valladolid (Morelia),,ciudad,,19.695890,-101.217640
+157,Filipinas,,isla,,15.971670,-93.328330
+158,Cihuatlán,,villa,,19.238280,-104.647280
+159,San Juan de Ulúa,,ciudad,,19.208890,-96.131060
+160,Amozoc,,ciudad,,19.046110,-98.045000
+161,"San Lorenzo, jurisdicción de Guaxolotitlan",,pueblo,,,
+162,Compostela,,ciudad,,21.147870,-105.089890
+163,Atoyac,,villa,,17.206670,-100.433060
+164,Guachinango,,real,,20.700000,-104.433333
+165,Manila,,ciudad,,27.717640,-103.853100
+166,Acapulco,,ciudad,,16.862870,-99.887009
+167,Santo Domigo Latani,,pueblo,,,
+168,Chietla,,ciudad,,18.504960,-98.624510
+169,Santa María Yahuivé,,pueblo,,17.364690,-95.825310
+170,Chacaltianguis,,pueblo,,18.305280,-95.841670
+171,San Andrés Chalchicomula,,ciudad,,19.001610,-97.497870
+172,Tierra Malenba,,region,,,
+173,Ahuacatitlan,,pueblo,,18.709770,-100.284190
+174,Chimaltitlán,,villa,,18.670760,-99.611250
+175,Taxco,,ciudad,,18.554620,-99.605920
+176,Acayucan,,ciudad,,17.949790,-94.913860
+177,Brasil,,region,,19.415300,-99.213900
+178,San Cristóbal de las Casas,,ciudad,,16.737022,-92.637564
+179,Huajupam,,pueblo,,,
+180,Huajuapan,,pueblo,,17.807870,-97.779560
+183,San Antonio de Suchitepéquez,,pueblo,,14.539380,-91.414420
+184,Tehuantepec,,pueblo,,16.324630,-95.241040
+185,Yepes (España),,pueblo,,39.901990,-3.625170
+186,Mezquitán,,real,,20.691400,-103.354000
+187,Ahuatlán,,pueblo,,18.954440,-99.257220
+188,Cuernavaca,,villa,,18.926100,-99.230750
+189,Chapala,,villa,,20.260670,-103.027020
+190,Congo,,region,,17.531080,-99.028800
+191,Tierra Cafre,,region,,,
+192,Acaponeta,,villa,,22.481460,-105.330540
+193,San Marcial,,real,,16.030000,-96.400000
+194,Pátzcuaro,,villa,,19.625530,-101.640170
+195,Villa de los Lagos,,villa,,21.214720,-102.281670
+196,"Sonsonate, El Salvador",,villa,,13.718890,-89.724170
+197,Malinaltepeque,,region,,,
+366,Tacuba,,pueblo,,19.455900,-99.185700
+352,Minas de San Luis Potosí,,real,,,
+42,Nueva Veracruz,,ciudad,,19.180950,-96.142900
+2,Veracruz,,ciudad,,19.180950,-96.142900
+358,Isla Canaria,,isla,,28.460221,-16.246423
+1,Oaxaca de Juarez,,ciudad,,17.065420,-96.723650
+3,Antequera,,ciudad,,17.123890,-96.781670
+4,Ujlapa del Marquesado de Oaxaca,,pueblo,,,
+367,Santa Maria Ixcuintepec Peñoles de Iteobeipa,,pueblo,,,
+75,Ixtepeji,,pueblo,,17.267680,-96.563690
+368,Toluca,,ciudad,,19.292222,-99.653889
+146,Ciudad de México,,ciudad,,19.419444,-99.145556
+214,Guaxolotitlan,,region,,,
+215,Teotitlan,,region,,17.022750,-96.527960
+198,Atlahuaca,,region,,18.483333,-95.866667
+199,Yolox,,pueblo,,17.589070,-96.552350
+200,"Santamaria, reino de Castilla",,puerto,,,
+201,"Apoala, jurisdicción de Yanhuitlan",,pueblo,,,
+202,Peñoles,,region,,17.077778,-97.001389
+203,Jamiltepec,,pueblo,,16.282580,-97.824460
+204,Jalatlaco,,pueblo,,17.067330,-96.716470
+205,Cuicatlan,,region,,17.802778,-96.959444
+206,Tulancingo,,ciudad,,20.083550,-98.362880
+207,Chimaltitán,,real,,21.733333,-103.700000
+208,San Luis Potosí,,ciudad,,22.149722,-100.975000
+209,Totomehuacan,,pueblo,,,
+210,Motaje,,real,,22.397778,-105.246389
+211,La Magdalena,,real,,25.337222,-112.113056
+212,Sombrerete,,real,,23.634660,-103.642440
+213,"Pinula, Guatemala",,pueblo,,,
+353,Totiquipaque,,real,,,
+216,Tequila,,villa,,20.882050,-103.835990
+217,Montegrande,,real,,16.051940,-93.078330
+218,Amajac,,real,,21.252300,-98.781300
+219,Yanhuitlán,,pueblo,,17.528610,-97.342600
+220,Tlaxiaco,,pueblo,,17.269160,-97.680530
+221,Petlalcingo,,pueblo,,18.084630,-97.917500
+222,Tonalá,,pueblo,,20.624450,-103.234230
+223,Jicayán,,pueblo,,16.451790,-98.014250
+224,"Ysquinta, Guatemala",,pueblo,,,
+225,"Mapastepeque, Soconusco",,pueblo,,,
+226,Tequepexpan,,villa,,20.602180,-103.399750
+227,"Córdoba, Veracruz",,pueblo,,18.884200,-96.925590
+228,Santo Domingo,,pueblo,,16.324630,-95.241040
+229,Santiago,,pueblo,,20.588060,-100.388060
+230,Magdalena Apasco,,pueblo,,17.240830,-96.820830
+231,San Pedro Guamesula,,pueblo,,,
+232,Chiapa de la Real,,pueblo,,,
+233,Durango,,villa,,32.249167,-115.251667
+234,San José del Parral,,real,,27.511610,-105.075440
+235,Minas de la Resurrección,,real,,,
+236,Sayula,,villa,,19.877200,-103.573370
+237,Mascota,,pueblo,,20.526130,-104.787810
+238,Poncitlán,,villa,,20.358190,-102.925170
+239,Teosaqualco,,pueblo,,,
+240,Michoacán,,ciudad,,19.166670,-101.833330
+241,Hacienda de Buena Vista,,region,,-15.467320,-74.448620
+242,Tlajomulco,,villa,,20.492430,-103.429390
+243,Tlazazalca,,villa,,19.970850,-102.058420
+244,Nuevo León,,gobernacion,,25.566667,-99.970556
+245,San Cristobal de la Habana,,ciudad,,,
+246,Cuautitlan,,region,,19.886861,-104.105944
+247,Jolapa,,real,,21.222500,-98.705280
+248,San Miguel en las provincias de Guatemala,,pueblo,,,
+249,Ciudad de Guatemala,,ciudad,,14.641667,-90.513333
+250,Matamba,,region,,17.317220,-92.562220
+251,León,,villa,,21.129080,-101.673740
+252,Huehuetoca,,villa,,19.835430,-99.203800
+253,Mazapil,,real,,24.360000,-101.930000
+254,Santa María de los Lagos,,villa,,-41.342360,-73.211600
+255,San Pedro Analco,,real,,21.137972,-103.949861
+256,Tlaltenango,,villa,,19.159900,-98.341050
+257,Iztapalapa,,villa,,19.355290,-99.062240
+258,Atemajac,,villa,,20.142680,-103.711750
+259,Jala,,villa,,21.180600,-104.397160
+260,Puerto Rico,,isla,,17.659060,-100.656700
+261,Campeche,,ciudad,,19.844814,-90.539649
+262,San Luis,,ciudad,,22.149722,-100.975000
+264,Minas de Sultepeque,,region,,,
+265,Caramandi,,region,,,
+266,Xofa,,region,,,
+267,Texcoco,,ciudad,,19.511940,-98.882930
+268,Nación Berberisca,,region,,,
+270,tierra Arda,,region,,,
+271,Xamarca,,ciudad,,,
+272,tierra Joloffe,,region,,,
+273,Extramadura,,region,,,
+274,España,,region,,19.415000,-99.171389
+275,Carabali,,ciudad,,16.806110,-99.170580
+276,Durango,,ciudad,,24.833330,-104.833330
+277,Aguascalientes,,villa,,21.882340,-102.282590
+278,Tepezalá,,real,,22.216667,-102.166667
+279,Zamora,,villa,,19.985500,-102.283870
+280,Teocaltiche,,pueblo,,21.434210,-102.574490
+281,Valle de Caxitlan,,provincia,,,
+282,China,,pais,,17.306111,-95.989444
+288,India,,pais,,20.472220,-103.262780
+290,minas de Guanajuato,,villa,,,
+291,Los Angeles,,ciudad,,20.565850,-100.923560
+292,Guanajuato,,region,,21.018889,-101.262778
+293,Juchipila,,ciudad,,21.383500,-103.105210
+295,Nochistlán,,ciudad,,21.441780,-102.850240
+296,Villa de Jeréz,,villa,,22.788350,-103.226590
+297,Chametla,,real,,22.877500,-105.957500
+298,Ameca,,villa,,20.535720,-104.050760
+299,Culiacán,,villa,,24.790320,-107.387820
+300,Zapotlán,,pueblo,,19.705220,-103.467090
+301,Valle de Aguacatitlan,,pueblo,,,
+302,Jicotlan,,pueblo,,17.806870,-97.470780
+303,Jurisdicción de Nieves,,region,,,
+304,Real de Charcas,,villa,,23.189720,-101.069720
+305,Zayula,,pueblo,,,
+306,"Real de Minas de San Juan de Tepezalá, Jurisdicción de Aguascalientes",,real,,,
+307,de San Antonio Tuscacuesco,,pueblo,,,
+308,Tangancícuaro,,villa,,19.887330,-102.206360
+309,Irapuato,,villa,,20.676750,-101.356280
+310,Zapopan,,villa,,20.723560,-103.384790
+311,Ajijic,,villa,,20.303250,-103.254760
+312,Jiquilpan,,villa,,19.984740,-102.750990
+313,Sonora,,region,,29.833333,-110.950000
+314,Tacámbaro,,villa,,19.235020,-101.458240
+315,Jurisdicción de Colimilla,,region,,,
+316,Villa Purificación,,villa,,19.785970,-104.707640
+317,Jalpa,,real,,21.216944,-99.474444
+318,"Rancho de los Molinos, Jurisdicción de Aguascalientes",,region,,,
+319,Jurisdicción de la Barca,,region,,,
+320,Villa de Sierra de Pinos y Charcas,,villa,,,
+321,Minas del Rosario,,real,,22.990460,-105.866960
+322,Tacotlán,,villa,,20.818700,-103.188570
+323,Sentispac,,villa,,21.804780,-105.345930
+324,Jacona,,pueblo,,19.952320,-102.307810
+325,Hacienda de San Andrés,,region,,19.118820,-98.833270
+327,Jocotlán,,pueblo,,19.793180,-104.874200
+328,Juanacatlán,,villa,,20.498740,-103.149390
+329,Salvatierra,,ciudad,,20.215000,-100.878056
+330,Cosomaluapan,,pueblo,,,
+331,Ayamontes en Castilla,,ciudad,,,
+332,"Santa Ana Zegache, Marquesado",,pueblo,,,
+333,Ciudad de Panama,,ciudad,,,
+334,Tejapa,,villa,,,
+335,Los Ríos o entre Ríos (Guinea),,region,,,
+338,Venta Los Naranjos (Xalapa),,ciudad,,,
+339,Venta Los Naranjos,,pueblo,,,
+344,San Juan Teitipac,,pueblo,,,
+345,San Juan Chilateca,,pueblo,,,
+346,Guadalcazar,,villa,,,
+347,Santa Maria Quiegolani,,pueblo,,,
+348,Atrisco,,villa,,,
+349,Minas de Nieves,,real,,,
+350,Hacienda de San Miguel,,region,,,
+336,Ouidah,,region,,6.371289,2.076641
+337,"La Habana, Cuba",,ciudad,,23.133755,-82.355066
+354,Hacienda Toluquilla,,pueblo,,,
+341,"Veracruz, La Antigua",,ciudad,,19.180950,-96.142900
+359,Matatlán,,villa,,20.710556,-103.148889
+342,"Jalpa (de Méndez), Tabasco",,pueblo,362,18.175288,-93.063510
+340,"Nuestra Señora de los Remedios, Pacho Viejo",,pueblo,,19.480500,-96.917400
+343,"Naolinco, Veracruz",,pueblo,2,19.654706,-96.869880

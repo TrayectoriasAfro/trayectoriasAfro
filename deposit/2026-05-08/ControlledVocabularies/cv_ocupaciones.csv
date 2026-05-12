@@ -1,0 +1,273 @@
+ocupacion_id,ocupacion
+1,maestro boticario
+2,capitán
+3,mercader
+4,dueño de trapiche de hacer azucar
+5,alcalde ordinario
+6,factor del asiento de negros
+7,dean
+8,tratante
+9,Escribano Público
+10,Dueño De Navío
+11,Cura Beneficiado
+12,Caballero
+13,Dueño De Recua
+14,Sargento Mayor
+15,Dueño De Hacienda
+16,Alguacil Mayor
+17,Alcalde Ordinario De La Santa Hermandad
+18,Reverendo Predicador General
+19,Escribano Real
+20,Alcalde Mayor
+21,Cargador De Flota
+22,Reverendo Padre
+23,Médico
+24,Regidor
+25,Canónigo Albacea
+26,Licenciado Chantre
+27,Obrero Mayor
+28,Notario Apostólico
+29,Clerigo Presbitero
+30,Mayordomo
+31,Canónigo
+32,Aparejador
+33,Chantre
+34,Tesorero De La Santa Iglesia
+35,Panadero
+36,Presbítero Secretario
+37,Dueño De Carros
+38,Patrón Del Hospital
+39,Tesorero
+40,Zapatero
+41,Bachiller
+42,Presbítero
+43,Procurador De Causas
+44,Obispo
+45,Rector
+46,Sedero
+47,Oidor En La Real Audiencia
+48,General
+49,Cacica
+50,Alguacil
+51,Racionero
+52,Cerero
+53,Obrajero
+54,Oficial De Sombrerero
+55,Tundidor
+56,Escribano
+57,Arriero
+58,Escribano Mayor
+59,Pintor
+60,Oficial De Empedrador
+61,Empedrador
+62,Artillero Mayor
+63,Biscochero
+64,Labrador
+65,Oficial De Sastre
+66,Maestro Sastre
+67,Dorador
+68,Maestre Escuela
+69,Clérigo
+70,Licenciado
+71,Pastelero
+72,Abogado De La Real Audiencia
+73,Fraile Agustino
+74,Dueño De Obraje
+75,Arcediano
+76,Platero De Oro
+77,Tintorero
+78,Encomendero De Negros
+79,Regidor Perpetuo
+80,Asentista
+81,Caballero De La Orden De Santiago
+82,Cura Vicario
+83,Factor Diputado Del Consulado De Sevilla
+84,Teniente De Correo
+85,Sastre
+86,Tesorero Juez Oficial De La Real Cruzada
+87,Encargado De Una Estancia De Ganado
+88,Fraile
+89,Herrero
+90,Maestro De Herrero
+91,Cacique
+92,Depositario General
+93,Fraile Sacerdote
+94,Maestro Platero
+95,Alferez Mayor
+96,Administrador De Trapiche
+97,Clérigo Domiciliario
+98,Tesorero De La Santa Cruzada
+99,Piloto
+100,Sombrerero
+101,Procurador General
+102,Gobernador
+103,Alférez
+104,Hombre De Negocios
+105,Most
+106,Moso
+107,Almirante
+108,Colector General De Diezmos
+109,Ayudante
+110,Religiosa
+111,Servicio Personal
+112,Madre De Monasterio
+113,Escribano De Su Majestad
+114,Diacono Domiciliario
+115,Corregidor
+116,Pagador
+117,Cura
+118,Criada
+119,Madre Religiosa
+120,Contador
+121,Minero
+122,Molinero
+123,Sedero Gorrero
+124,Dueño De Obraje De Hacer Sombreros
+125,Curtidor
+126,Tratante En Ganado Menor
+127,Maestro Zapatero
+128,Bachiller Presbítero
+129,Maestro Carpintero
+130,Encomendero
+131,Maestro De Capilla
+132,Maestro Sedero
+133,Teniente De Caballos Corazas
+134,Presbitero Domiciliario
+135,Maestro Cirujano
+136,Vicario Y Prior
+137,Licenciado Beneficiado
+138,Licenciado Clérigo Presbítero
+139,Maestro Espadero
+140,Fraile Religioso
+141,Procurador
+142,Comisario De La Inquisición
+143,Licenciado Presbítero
+144,Jubetero
+145,Tratante En Ganado De Cerda
+146,Latonero
+147,Regidor Dueño De Obraje
+148,Tratante En Ganado Prieto
+149,Maestro Cerrajero
+150,Dueño De Armazón De Negros
+151,Maestro De Hacer Agujas
+152,Dueño De Ingenio
+153,Fraile Procurador
+154,Confitero
+155,Provincial Ordinario De La Santa Hermandad
+156,Tesorero De La Casa De La Moneda
+157,Emprimador
+158,Fraile Administrador Del Convento
+159,Padre Procurador Del Colegio Jesuita
+160,Oficial De Herrero
+161,Sacerdote
+162,Artillero
+163,Perteneciente De Trapiche
+164,Justicia Mayor
+165,Prior
+166,Organista
+167,Cargador
+168,Comerciante
+169,Mercader De Paños
+170,Padre
+171,Librero
+172,Maestro Herrador
+173,Provisor
+174,Monja Novicia
+175,Capitán Piloto De La Carrera De Las Indias
+176,"Pastelero, Oficial"
+177,Barbero
+178,Sacristán
+179,Relator De La Real Audiencia
+180,Presidente De La Real Audiencia
+181,Monja
+182,Carpintero
+183,Clérigo De Menores Órdenes
+184,Capitan De Navío
+185,Arzobispado
+186,Familiar De La Inquisición
+187,Hortelano
+188,Juez Administrador De Acabalas
+189,Teniente General
+190,Arcabucero
+191,Boticario
+192,Criador De Ganados
+193,Alguacil De La Inquisición
+194,Alcalde De Corte De La Real Sala De Crimen
+195,Mayordomo De Una Hacienda
+196,Comisario
+197,Administrador De Hacienda
+198,Mercader De Plata
+199,Teniente De Caballería
+200,Tesorero Oficial
+201,Clérigo Diácono
+202,Ensayador
+203,Vicario
+204,Perteneciente De Hacienda
+205,Prebendado
+206,Juez Provisor Y Vicario General Del Obispado
+207,Ensayador Y Balanzario De La Hacienda
+208,Perteneciente De Tienda
+209,Síndico
+210,Obligado Del Abasto De Carne
+211,Oficial De Zapatero
+212,Administrador Minero
+213,Vicario Y Juez Eclesiástico
+214,Oficial Jabonero
+215,Sargento
+216,Oficial De Sillero
+217,Juez Eclesiástico
+218,Comisario Del Tribunal Del Santo Oficio
+219,Oficial De Platero
+220,Oficial De Cerero
+221,Cocinero
+222,Viandante
+223,Capitán De Guerra
+224,Secretario Del Santo Oficio
+225,Dueño De Ingenio Azucarero
+226,Notificador
+227,Oidor
+228,Fiscal De La Real Audiencia
+229,Mayorazgo Presbítero
+230,Teniente De Alcalde Mayor
+231,Secretario De Cámara
+232,Platero
+233,Juez Receptor
+234,Abogado De La Ciudad De México
+235,Cobrador De Los Reales Tributos
+236,Diácono
+237,Albacea
+238,Exsíndico
+239,Administrador General De La Orden De Nuestra Señora De La Merced
+240,Lcalde Provisional De La Santa Hermandad De La Provincia
+241,Alcalde Provisional De La Santa Hermandad De La Provincia
+242,Procurador Del Real Fisco
+243,Presbítero Y Vicario
+244,Juez Repartidor
+245,Serrarero
+246,Sirviente
+247,Provincial De La Santa Hermandad De Antequera
+248,Albañil
+249,Asentista Del Nuevo Impuesto Del Pulque Blanco De Antequera
+250,Asistente
+251,Dueño De Hacienda De Ganado Mayor Y Menor Y Trapiche
+252,Ventera
+253,Comerciante De Negros
+254,Dueno De Hacienda De Ganada Menor
+255,Dueño De Hacienda De Ganado Mayor Y Menor En Terminos Del Pueblo De Ygutla[?] De Antequera
+256,Director General De Asiento
+257,No Dice
+258,Oficial De Albañilería
+259,Juez Superintendente Del Hospital
+260,Conde
+261,Maestro De Campo
+262,Maestro Ensamblador
+263,Cuidadora De Sus Hijos
+264,Religioso
+265,Canciller De La Real Audiencia
+266,Oficial De Curtidor
+267,Oficial De Barbero
+268,Maestro Azucarero
+269,Oficial De Arte De Pintor
+270,Cochero
+271,Oficial De Carrocero
+272,Subdiácono

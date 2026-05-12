@@ -1,0 +1,28 @@
+TrayectoriasAfro Data Deposit
+Export date    : 2026-05-08
+Cutoff date    : 2026-04-30 (records updated on or before this date)
+Schema version : 1.0.0
+License        : CC BY-NC 4.0
+
+Note: 'Export date' is the data snapshot date. Schema version tracks structural changes to the CSV layout.
+File                                              Rows
+--------------------------------------------- --------
+corporaciones.csv                                   31
+cv_agencia_adaptacion.csv                           10
+cv_calidades.csv                                    62
+cv_estado_matrimonial.csv                            7
+cv_etnonimos.csv                                    51
+cv_ocupaciones.csv                                 272
+cv_roles_evento.csv                                 64
+cv_situaciones_lugar.csv                            16
+cv_tipos_documentales.csv                           40
+cv_tipos_institucion.csv                             8
+cv_tipos_lugar.csv                                  15
+documentos.csv                                    3339
+lugares.csv                                        339
+personas_esclavizadas.csv                         3917
+personas_no_esclavizadas.csv                      4957
+relaciones_personas.csv                           9701
+roles_evento_instituciones.csv                      40
+roles_evento_personas.csv                         6335
+trayectorias.csv                                 11489

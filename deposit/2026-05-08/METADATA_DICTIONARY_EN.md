@@ -45,13 +45,13 @@ Each row represents an enslaved person recorded in the database. The same person
 | `calidades` | Text `\|`\-delimited values | Socioethnic classification(s) (*calidad*) ascribed to the person. See `cv_calidades.csv`. |
 | `agencia/adaptacion` | Text `\|`\-delimited values | Level(s) of agency or adaptation recorded. See `cv_agencia_adaptacion.csv`. |
 | `etnonimos` | Text `\|`\-delimited values | Ethnonym(s) associated with the person. See `cv_etnonimos.csv`. |
-| `procedencia_lugar_id` | Integer | Identifier of the place of African or other prior origin. Reference to `lugar_id` in `lugares.csv`. |
+| `procedencia_lugar_id` | Integer | Identifier of the place where the enslaved person stayed before the sale. Reference to `lugar_id` in `lugares.csv`. |
 | `procedencia_adicional` | Text | Additional provenance information not captured by the place field (e.g., ship name or establishment). |
 | `marcas_corporales` | Text | Description of body marks, brandings (*carimbos*), ritual scarifications, or other physical signs. |
 | `conducta` | Text | Reports on the conduct of the enslaved person as noted in the document. |
-| `salud` | Text | Temporary or permanent health condition of the enslaved person at the time of the event. May include pregnancy status. |
+| `salud` | Text | Temporary or permanent health condition of the enslaved person at the time of the event. May include pregnancy. |
 | `ocupaciones` | Text `\|`\-delimited values | Occupation(s) of the person. See `cv_ocupaciones.csv`. |
-| `ocupacion_categoria` | Text | Occupation category (e.g., domestic service, craft, obraje). |
+| `ocupacion_categoria` | Text | Occupation category (e.g., domestic service, skilled trade, workshop). |
 | `estado_matrimonial` | Text `\|`\-delimited values | Marital status of the person. See `cv_estado_matrimonial.csv`. |
 | `fecha_nacimiento` | Date (ISO 8601) | Computed date of birth. See [Date conventions](#date-conventions). |
 | `fecha_nacimiento_raw` | Text | Literal birth-date text in the document. |
@@ -103,7 +103,7 @@ Each row represents a notarial or ecclesiastical document. Archive (physical rep
 | `unidad_documental_compuesta` | Text | Number or identifier of the documentary unit (volume, box, file). |
 | `tipo_documento` | Text | Document type (e.g., bill of sale, testament). See `cv_tipos_documentales.csv`. |
 | `sigla_documento` | Text | Location code of the document within the documentary unit. |
-| `titulo` | Text | Title or brief description of the document. |
+| `resumen` | Text | Title or brief description of the document. |
 | `deteriorado` | Boolean | `True` if the document shows physical deterioration affecting legibility. |
 | `fecha_inicial` | Date (ISO 8601) | Start date of the document. See [Date conventions](#date-conventions). |
 | `fecha_inicial_raw` | Text | Literal start-date text in the document. |

@@ -45,11 +45,11 @@ Cada fila representa a una persona esclavizada registrada en la base de datos. U
 | `calidades` | Texto (valores `\|`\-delimitados) | Adscripción o adscripciones de calidad socioétnica de la persona. Ver `cv_calidades.csv`. |
 | `agencia/adaptacion` | Texto (valores `\|`\-delimitados) | Nivel o niveles de agencia o adaptación registrados. Ver `cv_agencia_adaptacion.csv`. |
 | `etnonimos` | Texto (valores `\|`\-delimitados) | Etnónimo o etnónimos asociados a la persona. Ver `cv_etnonimos.csv`. |
-| `procedencia_lugar_id` | Numérico entero | Identificador del lugar de procedencia africana o de otro origen previo. Referencia a `lugar_id` en `lugares.csv`. |
+| `procedencia_lugar_id` | Numérico entero | Identificador del lugar previo a la venta de la persona esclavizada, de donde vino anteriormente. Referencia a `lugar_id` en `lugares.csv`. |
 | `procedencia_adicional` | Texto | Información adicional de procedencia no capturada por el lugar (p. ej., nombre de barco o establecimiento). |
 | `marcas_corporales` | Texto | Descripción de marcas corporales, carimbos, cicatrices rituales u otras señas físicas. |
 | `conducta` | Texto | Informes de la conducta de la persona esclavizada indicados en el documento |
-| `salud` | Texto | Condición de salud temporal o permanente de la persona esclavizada al momento del evento. Puede incluir condición de embarazo. |
+| `salud` | Texto | Condición de salud temporal o permanente de la persona esclavizada al momento del evento. Puede incluir condición de embarazo o discapacidad, por ejemplo. |
 | `ocupaciones` | Texto (valores `\|`\-delimitados) | Ocupación u ocupaciones de la persona. Ver `cv_ocupaciones.csv`. |
 | `ocupacion_categoria` | Texto | Categoría de la ocupación (p. ej., servicio doméstico, artesanía, obraje). |
 | `estado_matrimonial` | Texto (valores `\|`\-delimitados) | Estado matrimonial de la persona. Ver `cv_estado_matrimonial.csv`. |
@@ -103,7 +103,7 @@ Cada fila representa un documento notarial o eclesiástico. Los campos del archi
 | `unidad_documental_compuesta` | Texto | Número o identificador de la unidad documental (volumen, caja, expediente). |
 | `tipo_documento` | Texto | Tipo documental del documento (p. ej., carta de venta, testamento). Ver `cv_tipos_documentales.csv`. |
 | `sigla_documento` | Texto | Sigla de ubicación del documento dentro de la unidad documental. |
-| `titulo` | Texto | Título o descripción breve del documento. |
+| `resumen` | Texto | Título o descripción breve del documento. |
 | `deteriorado` | Booleano | `True` si el documento presenta deterioro físico que afecta su legibilidad. |
 | `fecha_inicial` | Fecha (ISO 8601\) | Fecha inicial del documento. Ver [Convenciones de fechas](#convenciones-de-fechas). |
 | `fecha_inicial_raw` | Texto | Texto literal de la fecha inicial en el documento. |
