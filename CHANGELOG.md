@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Search: `PersonaEsclavizada.salud` is now part of the persona search vector (searching "embarazada" missed most matches). Run `manage.py populate_search_vectors --model persona` after deploying; it also fills ~3,000 personas whose vector was empty.
 - Document detail: "Personas relacionadas" links to the wrong detail page (404) for enslaved persons; the persona list API now exposes `persona_model` instead of relying on hardcoded content-type IDs.
+- Fix `ModuleNotFoundError: No module named 'pkg_resources'` by restricting `setuptools` to `<81` in `mstdb_manager`.
 
 ### Repository
 
