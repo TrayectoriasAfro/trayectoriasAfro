@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Backend (`mstdb_manager`)
+
+- New management command `audit_lugar_csv`: data-integrity audit of a ground-truth Lugar CSV export against `dbgestor_lugar` (keyed on `lugar_id`). Reports id existence both ways, lat/lon agreement with Decimal tolerance, missing coordinates split into unreferenceable (etnónimo / "no puede ser referenciada" comment semantics) vs. plain missing data, and consolidation hints (consolidar/unificar/combinar) from the CSV `comentarios` column. Console summary plus `--json` and `--report` (flat CSV) outputs.
+
 ### Fixed
 
 - Search: `PersonaEsclavizada.salud` is now part of the persona search vector (searching "embarazada" missed most matches). Run `manage.py populate_search_vectors --model persona` after deploying; it also fills ~3,000 personas whose vector was empty.

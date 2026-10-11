@@ -26,6 +26,11 @@
 - Filter `conducta_canonica=<id|texto>` (search + crosstab, crosstab dimension too) resolves a term via `ConductaTerm.resolve()` (id / canonico / accent-insensitive alias) and matches the M2M link OR `conducta__unaccent__icontains` per alias — unlinked records still surface; wildcard aliases (`escap*`) match by prefix
 - FTS: Persona `search_vector` includes `conducta` (weight D) via correlated Subquery + `UNACCENT` (MTI child fields can't be referenced directly from a parent-table UPDATE), so `q=huido` finds `huído`; reindex with `populate_search_vectors --model persona`
 - Backfill: `link_conducta_terms` (dry-run default, `--apply`, `--csv` review report; ambiguous aliases like `busque` and wildcards are review-only)
+
+## Lugar data integrity audit (`audit_lugar_csv`)
+- Compares a ground-truth Lugar CSV export (default `temp/data/Lugar-<today>.csv`; `comentarios` is a CSV-only curator column, not in the DB) against `dbgestor_lugar` on `lugar_id`: existence both ways, lat/lon agreement (`Decimal` + tolerance, DB column is numeric(9,6)), missing coordinates split into unreferenceable (etnónimo / "no puede ser referenciada" semantics) vs. plain, and consolidation hints (consolidar/unificar/combinar)
+- Outputs: console summary, `--json` full report, `--report` flat CSV of every finding
+- Run inside the web container (`docker exec trayectorias_web python manage.py audit_lugar_csv`); the CSV path must be reachable from the container (mount/copy it in or pass `--csv`)
 - Management UI: `vocabularios/conducta-terms/` API (collision-validated writes), Django admin, legacy-form autocomplete, catalogar multi-select with quick creator + "¿Quisiste decir…?" suggestion, Search sidebar searchable-select on the `conductas` facet, persona detail badges
 
 ## API v2 Search & Browse (api/v2/urls.py, SearchAPIView)
