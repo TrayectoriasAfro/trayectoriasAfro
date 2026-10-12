@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Frontend (`mstdb_theme`)
 
 - Added an ES/EN language switch to the landing hero, below the account link.
+- Migrated the remaining hardcoded UI text in `src/conf` and `src/lib` to Paraglide. Conf modules (`filters`, `columns`, `crosstab`, `local`) now expose message keys (`nameKey`, `labelKey`, `placeholderKey`, `groupKey`, `rangeLabelKey`, option `labelKey`) that consumers resolve at render time, and their Svelte consumers (Search page/tabs, `EntityTable`, `BrowseFilters`, `ColumnConfigModal`, `CrosstabView`, `SearchNetwork`, `Archivos`, `About`) resolve them so labels re-render on locale switch.
+- Localized formatting and shared components: `renderCellValue`/`formatDate` now format dates and numbers via `getLocale()`, the landing title suffixes, embed-kind labels, `MultiSelect`, `SearchableSelect`, `FlexDateInput`, `ConfirmDelete`, `Tooltip`, `SuggestMerge`, `RichTextEditor`, `LeccionForm`, `LeccionColaboradores`, and the figure caption are all translated.
+- Long-form prose in `conf/archivos.js` and `conf/contributors.js` (archive descriptions, contributor bios/roles, `additionalInfo`, `elaboracion`) is now stored as `_es`/`_en` pairs and resolved with `pickLocale`/`localizeArchivo`/`localizeContributor`; proper data (names, addresses, participants, citations) is never translated.
 
 ---
 
