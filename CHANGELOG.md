@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Search: lugares now support ordering by person count (`persona_count`). The unified-search ordering annotation mirrors `LugarListSerializer.get_persona_count` (trajectory place, birth/death place, origin) so the sort order matches the displayed numbers; the whitelist and annotation are both required, otherwise ordering silently falls back to the default.
 - CSV: the personas-esclavizadas export now includes a `lugares_trayectoria` column (trajectory places ordered by `ordinal`, formatted `lugar (situación)`); the list/export prefetches `p_x_l_pere` with `select_related('lugar','situacion_lugar')` to avoid N+1. The field also appears in the list JSON payload.
 - Public config: `GET /api/v2/config/` now exposes `contact_email` (from `PUBLIC_CONTACT_EMAIL`); empty hides the contact links.
+- Search: `typeCounts` in `search/` responses is now computed with the same query + sidebar/form filters as the active result set, for **every** entity type (not just the active one, and no longer from the unfiltered base queryset). For single-type requests this guarantees `typeCounts[active] == count`, so each entity-tab badge matches what its table would show with the current filters.
 
 ### Fixed
 
@@ -39,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migrated the remaining hardcoded UI text in `src/conf` and `src/lib` to Paraglide. Conf modules (`filters`, `columns`, `crosstab`, `local`) now expose message keys (`nameKey`, `labelKey`, `placeholderKey`, `groupKey`, `rangeLabelKey`, option `labelKey`) that consumers resolve at render time, and their Svelte consumers (Search page/tabs, `EntityTable`, `BrowseFilters`, `ColumnConfigModal`, `CrosstabView`, `SearchNetwork`, `Archivos`, `About`) resolve them so labels re-render on locale switch.
 - Localized formatting and shared components: `renderCellValue`/`formatDate` now format dates and numbers via `getLocale()`, the landing title suffixes, embed-kind labels, `MultiSelect`, `SearchableSelect`, `FlexDateInput`, `ConfirmDelete`, `Tooltip`, `SuggestMerge`, `RichTextEditor`, `LeccionForm`, `LeccionColaboradores`, and the figure caption are all translated.
 - Long-form prose in `conf/archivos.js` and `conf/contributors.js` (archive descriptions, contributor bios/roles, `additionalInfo`, `elaboracion`) is now stored as `_es`/`_en` pairs and resolved with `pickLocale`/`localizeArchivo`/`localizeContributor`; proper data (names, addresses, participants, citations) is never translated.
+- Search: entity-tab badges now read only the filter-aware `typeCounts` from `search/`, removing the global `counts/` fallback and the stale/blank values it produced. A known `0` renders, the hourglass shows only while a new query/filter context is loading (`typeCountsLoading`), and `typeCounts` is reset on new searches so a previous context never lingers. Added the pure `searchBadges.js` helper (`tabBadge`) with a vitest unit test.
 
 ---
 
