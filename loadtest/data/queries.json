@@ -1,0 +1,479 @@
+{
+  "meta": {
+    "note": "Source-of-truth query inventory for the read-path stress test. The generator expands each section's `variation` axis into a cartesian product so cached endpoints see many distinct querystrings (cache-miss cost) while `fixed` pools measure cache-hit latency.",
+    "provenance": "Derived from the api/v2 view query-param contracts (search, search/network, crosstab, travel-trajectories/aggregated, places-people-distribution). Replace the base values with real q/filter combinations harvested from production logs or the DB before the window; see RUNBOOK.md.",
+    "generated_by": "loadtest/scripts/generate_queries.js",
+    "review": "Every value below must be a VALID param for its endpoint; the generator does not validate against live data.",
+    "generated_at": "2026-10-12T03:58:42.350Z"
+  },
+  "search": {
+    "varying": [
+      {
+        "q": "esclavizada",
+        "type": "personaesclavizada",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "esclavizada",
+        "type": "personaesclavizada",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "esclavizada",
+        "type": "personaesclavizada",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "esclavizada",
+        "type": "personaesclavizada",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "negro",
+        "type": "personaesclavizada",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "negro",
+        "type": "personaesclavizada",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "negro",
+        "type": "personaesclavizada",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "negro",
+        "type": "personaesclavizada",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "Maria",
+        "type": "personaesclavizada",
+        "sexo": "m",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "Maria",
+        "type": "personaesclavizada",
+        "sexo": "m",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "Maria",
+        "type": "personaesclavizada",
+        "sexo": "m",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "Maria",
+        "type": "personaesclavizada",
+        "sexo": "m",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "Juan",
+        "type": "personaesclavizada",
+        "sexo": "v",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "Juan",
+        "type": "personaesclavizada",
+        "sexo": "v",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "Juan",
+        "type": "personaesclavizada",
+        "sexo": "v",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "Juan",
+        "type": "personaesclavizada",
+        "sexo": "v",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "mulato",
+        "type": "personaesclavizada",
+        "etnonimo": "mulato",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "mulato",
+        "type": "personaesclavizada",
+        "etnonimo": "mulato",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "mulato",
+        "type": "personaesclavizada",
+        "etnonimo": "mulato",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "mulato",
+        "type": "personaesclavizada",
+        "etnonimo": "mulato",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "venta",
+        "type": "documento",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "venta",
+        "type": "documento",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "q": "venta",
+        "type": "documento",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "q": "venta",
+        "type": "documento",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "documento",
+        "year": "1650,1700",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "documento",
+        "year": "1650,1700",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "documento",
+        "year": "1650,1700",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "documento",
+        "year": "1650,1700",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "personaesclavizada",
+        "calidad": "esclavo",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "personaesclavizada",
+        "calidad": "esclavo",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "personaesclavizada",
+        "calidad": "esclavo",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "personaesclavizada",
+        "calidad": "esclavo",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "lugar",
+        "search": "Puebla",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "lugar",
+        "search": "Puebla",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "lugar",
+        "search": "Puebla",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "lugar",
+        "search": "Puebla",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "all",
+        "search": "veracruz",
+        "page_size": 30,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "all",
+        "search": "veracruz",
+        "page_size": 30,
+        "ordering": "nombre_normalizado"
+      },
+      {
+        "type": "all",
+        "search": "veracruz",
+        "page_size": 100,
+        "ordering": "-created_at"
+      },
+      {
+        "type": "all",
+        "search": "veracruz",
+        "page_size": 100,
+        "ordering": "nombre_normalizado"
+      }
+    ],
+    "expensive": [
+      {
+        "q": "de",
+        "type": "all",
+        "page_size": 300
+      },
+      {
+        "q": "la",
+        "type": "personaesclavizada",
+        "page_size": 300
+      },
+      {
+        "type": "personaesclavizada",
+        "year": "1600,1800",
+        "page_size": 300
+      },
+      {
+        "q": "esclavo",
+        "type": "all",
+        "search": "a"
+      }
+    ]
+  },
+  "network": {
+    "fixed": [
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "strict"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "expanded"
+      }
+    ],
+    "varying": [
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "strict",
+        "year": "1600,1700"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "strict",
+        "year": "1700,1800"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "expanded",
+        "sexo": "m",
+        "year": "1600,1700"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "expanded",
+        "sexo": "m",
+        "year": "1700,1800"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "strict",
+        "calidad": "esclavo",
+        "year": "1600,1700"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "strict",
+        "calidad": "esclavo",
+        "year": "1700,1800"
+      },
+      {
+        "type": "personanoesclavizada",
+        "scope_mode": "strict",
+        "year": "1600,1700"
+      },
+      {
+        "type": "personanoesclavizada",
+        "scope_mode": "strict",
+        "year": "1700,1800"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "expanded",
+        "year": "1600,1700"
+      },
+      {
+        "type": "personaesclavizada",
+        "scope_mode": "expanded",
+        "year": "1700,1800"
+      }
+    ]
+  },
+  "aggregated": {
+    "fixed": [
+      {
+        "include_timeline": "1",
+        "limit_rutas": "500"
+      }
+    ],
+    "varying": [
+      {
+        "include_timeline": "1",
+        "bbox": "-117,14,-86,33"
+      },
+      {
+        "include_timeline": "1",
+        "bbox": "-99.5,19.0,-98.5,20.0"
+      },
+      {
+        "include_timeline": "1",
+        "limit_rutas": "500",
+        "bbox": "-117,14,-86,33"
+      },
+      {
+        "include_timeline": "1",
+        "limit_rutas": "500",
+        "bbox": "-99.5,19.0,-98.5,20.0"
+      },
+      {
+        "include_timeline": "1",
+        "min_count": "2",
+        "bbox": "-117,14,-86,33"
+      },
+      {
+        "include_timeline": "1",
+        "min_count": "2",
+        "bbox": "-99.5,19.0,-98.5,20.0"
+      },
+      {
+        "include_timeline": "1",
+        "q": "esclavizada",
+        "bbox": "-117,14,-86,33"
+      },
+      {
+        "include_timeline": "1",
+        "q": "esclavizada",
+        "bbox": "-99.5,19.0,-98.5,20.0"
+      }
+    ]
+  },
+  "crosstab": {
+    "varying": [
+      {
+        "type": "personaesclavizada",
+        "row_dim": "sexo",
+        "col_dim": "etnonimos",
+        "cell_op": "count"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "sexo",
+        "col_dim": "etnonimos",
+        "cell_op": "pct_of_total"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "fecha_periodo",
+        "col_dim": "calidades",
+        "period_size": "50",
+        "cell_op": "count"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "fecha_periodo",
+        "col_dim": "calidades",
+        "period_size": "50",
+        "cell_op": "pct_of_total"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "procedencia",
+        "col_dim": "estado_civil",
+        "cell_op": "count"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "procedencia",
+        "col_dim": "estado_civil",
+        "cell_op": "pct_of_total"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "tipo_documental",
+        "col_dim": "ocupaciones",
+        "cell_op": "count"
+      },
+      {
+        "type": "personaesclavizada",
+        "row_dim": "tipo_documental",
+        "col_dim": "ocupaciones",
+        "cell_op": "pct_of_total"
+      },
+      {
+        "type": "personanoesclavizada",
+        "row_dim": "sexo",
+        "col_dim": "honorifico",
+        "cell_op": "count"
+      },
+      {
+        "type": "personanoesclavizada",
+        "row_dim": "sexo",
+        "col_dim": "honorifico",
+        "cell_op": "pct_of_total"
+      }
+    ]
+  },
+  "places_people_distribution": {
+    "fixed": [
+      {}
+    ]
+  },
+  "counts": {
+    "fixed": [
+      {}
+    ]
+  }
+}

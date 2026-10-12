@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Backend (`mstdb_manager`)
 
+- API: added a `LOADTEST_TOKEN`-gated DRF throttle bypass (`api/throttling.py`, wired as the default throttles in `mdb/settings.py`). Requests sending a matching `X-Loadtest-Token` header (compared with `hmac.compare_digest`) skip the `anon`/`user` rate limits; unset/empty `LOADTEST_TOKEN` keeps the bypass inert, and authentication/permissions are unaffected. Supports the production read-path stress test (see `loadtest/RUNBOOK.md`).
 - New management command `audit_lugar_csv`: data-integrity audit of a ground-truth Lugar CSV export against `dbgestor_lugar` (keyed on `lugar_id`). Reports id existence both ways, lat/lon agreement with Decimal tolerance, missing coordinates split into unreferenceable (etnónimo / "no puede ser referenciada" comment semantics) vs. plain missing data, and consolidation hints (consolidar/unificar/combinar) from the CSV `comentarios` column. Console summary plus `--json` and `--report` (flat CSV) outputs.
 
 ### Fixed
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Repository
 
+- Added `loadtest/`: a repeatable k6 stress-test harness for the public read path (`smoke`, `search-stress`, `viz-mix`, `static`, `spike`), a query-inventory generator (`scripts/generate_queries.js`), a read-only telemetry snapshot recorder, a Cloudflare/throttle pre-flight probe, a write-verb guard test, and an operating runbook (`loadtest/RUNBOOK.md`). Reads only; no write verbs.
 - `scripts/update.sh` now triggers a database backup before touching the checkout (`manage.py dbbackup -c` against the deployed stack, identical to the nightly cron; output lands in `./backups/`). A failed backup aborts the update; pass `--no-backup` to skip it.
 - `scripts/update.sh` and `scripts/update_dev.sh` now populate search vectors for PersonaEsclavizada and Persona models after updating the codebase.
 

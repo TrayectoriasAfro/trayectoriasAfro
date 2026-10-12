@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "note": "Source-of-truth query inventory for the read-path stress test. The generator expands each section's `variation` axis into a cartesian product so cached endpoints see many distinct querystrings (cache-miss cost) while `fixed` pools measure cache-hit latency.",
+    "provenance": "Derived from the api/v2 view query-param contracts (search, search/network, crosstab, travel-trajectories/aggregated, places-people-distribution). Replace the base values with real q/filter combinations harvested from production logs or the DB before the window; see RUNBOOK.md.",
+    "generated_by": "loadtest/scripts/generate_queries.js",
+    "review": "Every value below must be a VALID param for its endpoint; the generator does not validate against live data."
+  },
+  "search": {
+    "varying": [
+      { "q": "esclavizada", "type": "personaesclavizada" },
+      { "q": "negro", "type": "personaesclavizada" },
+      { "q": "Maria", "type": "personaesclavizada", "sexo": "m" },
+      { "q": "Juan", "type": "personaesclavizada", "sexo": "v" },
+      { "q": "mulato", "type": "personaesclavizada", "etnonimo": "mulato" },
+      { "q": "venta", "type": "documento" },
+      { "type": "documento", "year": "1650,1700" },
+      { "type": "personaesclavizada", "calidad": "esclavo" },
+      { "type": "lugar", "search": "Puebla" },
+      { "type": "all", "search": "veracruz" }
+    ],
+    "variation": {
+      "page_size": [30, 100],
+      "ordering": ["-created_at", "nombre_normalizado"]
+    },
+    "expensive": [
+      { "q": "de", "type": "all", "page_size": 300 },
+      { "q": "la", "type": "personaesclavizada", "page_size": 300 },
+      { "type": "personaesclavizada", "year": "1600,1800", "page_size": 300 },
+      { "q": "esclavo", "type": "all", "search": "a" }
+    ]
+  },
+  "network": {
+    "varying": [
+      { "type": "personaesclavizada", "scope_mode": "strict" },
+      { "type": "personaesclavizada", "scope_mode": "expanded", "sexo": "m" },
+      { "type": "personaesclavizada", "scope_mode": "strict", "calidad": "esclavo" },
+      { "type": "personanoesclavizada", "scope_mode": "strict" },
+      { "type": "personaesclavizada", "scope_mode": "expanded" }
+    ],
+    "variation": {
+      "year": ["1600,1700", "1700,1800"]
+    },
+    "fixed": [
+      { "type": "personaesclavizada", "scope_mode": "strict" },
+      { "type": "personaesclavizada", "scope_mode": "expanded" }
+    ]
+  },
+  "aggregated": {
+    "varying": [
+      { "include_timeline": "1" },
+      { "include_timeline": "1", "limit_rutas": "500" },
+      { "include_timeline": "1", "min_count": "2" },
+      { "include_timeline": "1", "q": "esclavizada" }
+    ],
+    "variation": {
+      "bbox": ["-117,14,-86,33", "-99.5,19.0,-98.5,20.0"]
+    },
+    "fixed": [
+      { "include_timeline": "1", "limit_rutas": "500" }
+    ]
+  },
+  "crosstab": {
+    "varying": [
+      { "type": "personaesclavizada", "row_dim": "sexo", "col_dim": "etnonimos" },
+      { "type": "personaesclavizada", "row_dim": "fecha_periodo", "col_dim": "calidades", "period_size": "50" },
+      { "type": "personaesclavizada", "row_dim": "procedencia", "col_dim": "estado_civil" },
+      { "type": "personaesclavizada", "row_dim": "tipo_documental", "col_dim": "ocupaciones" },
+      { "type": "personanoesclavizada", "row_dim": "sexo", "col_dim": "honorifico" }
+    ],
+    "variation": {
+      "cell_op": ["count", "pct_of_total"]
+    }
+  },
+  "places_people_distribution": {
+    "fixed": [{}]
+  },
+  "counts": {
+    "fixed": [{}]
+  }
+}

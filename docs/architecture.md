@@ -82,6 +82,12 @@
 - PersonaEsclavizadaListSerializer: adds etnonimos, hispanizacion, has_relaciones, documento_count
 - Write: for POST/PATCH operations
 
+## Production load testing (`loadtest/`)
+- Read-only k6 harness for the public read path, run through the Cloudflare edge from a disposable VM; operating guide in `loadtest/RUNBOOK.md`. Scenarios: `smoke`, `search-stress` (uncached `/search/`), `viz-mix` (cache-miss vs cache-hit for `search/network`, `crosstab`, `travel-trajectories/aggregated`, `places-people-distribution`), `static`, `spike`.
+- Auto-abort is threshold-driven: `baselineThresholds()` in `loadtest/config.js` aborts on any 5xx/429/CF-challenge, and cached latency thresholds use `abortOnFail` + `delayAbortEval`.
+- Throttle bypass (`api/throttling.py`): `LOADTEST_TOKEN`-gated `X-Loadtest-Token` header skips the global DRF `anon`/`user` throttles; inert when the env var is unset, reversible, and does not touch auth/permissions. Views with explicit `@throttle_classes` (login/register) are not bypassed.
+- `loadtest/scripts/generate_queries.js` expands `data/queries.seed.json` into `data/queries.json`; `guard_no_writes.sh` fails the build on any write verb; `snapshot.sh` records read-only origin telemetry (`docker stats`, `pg_stat_activity`, `pg_stat_statements`, Redis).
+
 ## Infra gotchas (found during Phase 1 / Lecciones Educativas work, July 2026)
 - Backend dependency mgmt is uv-only: update `mstdb_manager/pyproject.toml` with
   `uv add <pkg>` and commit the resulting `mstdb_manager/uv.lock` change.
@@ -105,3 +111,8 @@
   (e.g. someone else's in-progress edit in the same file), `git add -p` run via the
   sync terminal tool auto-answers "y" to all hunks (no real interactivity) — instead
   build a minimal patch file with just the wanted hunk and `git apply --cached patch.diff`.
+- Redis is configured (`mdb/settings.py` `CACHES` defaults to `redis://redis:6379/1`,
+  `IGNORE_EXCEPTIONS=True`) but is **not** defined in any `docker-compose*.yml` and
+  `.env.example` did not document `REDIS_URL`. With fail-open caching, an unreachable
+  Redis degrades silently to DB-only — verify the production `REDIS_URL` before reading
+  cache metrics.
