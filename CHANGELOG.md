@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - API: added a `LOADTEST_TOKEN`-gated DRF throttle bypass (`api/throttling.py`, wired as the default throttles in `mdb/settings.py`). Requests sending a matching `X-Loadtest-Token` header (compared with `hmac.compare_digest`) skip the `anon`/`user` rate limits; unset/empty `LOADTEST_TOKEN` keeps the bypass inert, and authentication/permissions are unaffected. Supports the production read-path stress test (see `loadtest/RUNBOOK.md`).
 - New management command `audit_lugar_csv`: data-integrity audit of a ground-truth Lugar CSV export against `dbgestor_lugar` (keyed on `lugar_id`). Reports id existence both ways, lat/lon agreement with Decimal tolerance, missing coordinates split into unreferenceable (etnónimo / "no puede ser referenciada" comment semantics) vs. plain missing data, and consolidation hints (consolidar/unificar/combinar) from the CSV `comentarios` column. Console summary plus `--json` and `--report` (flat CSV) outputs.
+- Search: lugares now support ordering by person count (`persona_count`). The unified-search ordering annotation mirrors `LugarListSerializer.get_persona_count` (trajectory place, birth/death place, origin) so the sort order matches the displayed numbers; the whitelist and annotation are both required, otherwise ordering silently falls back to the default.
+- CSV: the personas-esclavizadas export now includes a `lugares_trayectoria` column (trajectory places ordered by `ordinal`, formatted `lugar (situación)`); the list/export prefetches `p_x_l_pere` with `select_related('lugar','situacion_lugar')` to avoid N+1. The field also appears in the list JSON payload.
+- Public config: `GET /api/v2/config/` now exposes `contact_email` (from `PUBLIC_CONTACT_EMAIL`); empty hides the contact links.
 
 ### Fixed
 
@@ -28,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Frontend (`mstdb_theme`)
 
+- Search → Lugares: the "Personas" column is now sortable (asc/desc), with the ordering persisted in the URL.
+- Dashboard → People by Place: the "Resumen por Lugar" total column is now "Total Número de Personas Esclavizadas" (`viz_pbp_col_total_personas`), and the remaining hardcoded Spanish (axis labels, table `aria-label`, place dropdown) moved to Paraglide keys.
+- Footers (app and landing) and the Accessibility feedback section now render a `mailto:` contact link only when `PUBLIC_CONTACT_EMAIL` is set (no dead link when unset).
+- i18n: added the missing English translations (`lessons_read_lesson`, `lessons_error_mss`) to restore full es/en key parity.
 - Added an ES/EN language switch to the landing hero, below the account link.
 - Migrated the remaining hardcoded UI text in `src/conf` and `src/lib` to Paraglide. Conf modules (`filters`, `columns`, `crosstab`, `local`) now expose message keys (`nameKey`, `labelKey`, `placeholderKey`, `groupKey`, `rangeLabelKey`, option `labelKey`) that consumers resolve at render time, and their Svelte consumers (Search page/tabs, `EntityTable`, `BrowseFilters`, `ColumnConfigModal`, `CrosstabView`, `SearchNetwork`, `Archivos`, `About`) resolve them so labels re-render on locale switch.
 - Localized formatting and shared components: `renderCellValue`/`formatDate` now format dates and numbers via `getLocale()`, the landing title suffixes, embed-kind labels, `MultiSelect`, `SearchableSelect`, `FlexDateInput`, `ConfirmDelete`, `Tooltip`, `SuggestMerge`, `RichTextEditor`, `LeccionForm`, `LeccionColaboradores`, and the figure caption are all translated.
