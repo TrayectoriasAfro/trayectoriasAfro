@@ -1,3 +1,8 @@
+---
+name: plan-containerizemodernizetrayectoriasafro
+description: plan-containerizeModernizeTrayectoriasAfro
+disable-model-invocation: true
+---
 # Plan: Containerize & Modernize TrayectoriasAfro Platform
 
 This plan transforms your Django + Svelte applications into a fully containerized, self-contained system with PostgreSQL, migrates production data, and prepares for admin dashboard migration to Svelte. Based on your Docker Compose experience and phased approach preference, we'll tackle **containerization first** (with database migration), then the **admin dashboard recreation** second.
