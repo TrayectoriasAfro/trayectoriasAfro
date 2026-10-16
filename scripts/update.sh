@@ -5,7 +5,7 @@ set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-COMPOSE=(docker compose -f docker-compose.yml -f docker-compose.server.yml -f docker-compose.prod.yml)
+COMPOSE=(docker compose -f docker-compose.yml -f docker-compose.server.yml -f docker-compose.prod.yml -f docker-compose.monitoring.yml)
 
 cd "$PROJECT_ROOT"
 
