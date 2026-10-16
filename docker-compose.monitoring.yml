@@ -45,8 +45,14 @@ services:
       - netdata_lib:/var/lib/netdata
       - netdata_cache:/var/cache/netdata
       # Config-as-code (read-only): retention + the Postgres/Redis/HTTP collectors.
+      # Mount individual FILES, not the go.d dir: the entrypoint runs
+      # `cp -an /etc/netdata.stock/* /etc/netdata` when /etc/netdata is a
+      # mountpoint, and a read-only bind mount over the go.d *directory* makes
+      # that copy fail to preserve directory times (EROFS), aborting startup.
       - ./monitoring/netdata/netdata.conf:/etc/netdata/netdata.conf:ro
-      - ./monitoring/netdata/go.d:/etc/netdata/go.d:ro
+      - ./monitoring/netdata/go.d/postgres.conf:/etc/netdata/go.d/postgres.conf:ro
+      - ./monitoring/netdata/go.d/redis.conf:/etc/netdata/go.d/redis.conf:ro
+      - ./monitoring/netdata/go.d/httpcheck.conf:/etc/netdata/go.d/httpcheck.conf:ro
       # Host visibility (read-only).
       - /etc/os-release:/host/etc/os-release:ro
       - /etc/passwd:/host/etc/passwd:ro
