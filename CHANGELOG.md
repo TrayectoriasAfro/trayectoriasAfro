@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `loadtest/`: a repeatable k6 stress-test harness for the public read path (`smoke`, `search-stress`, `viz-mix`, `static`, `spike`), a query-inventory generator (`scripts/generate_queries.js`), a read-only telemetry snapshot recorder, a Cloudflare/throttle pre-flight probe, a write-verb guard test, and an operating runbook (`loadtest/RUNBOOK.md`). Reads only; no write verbs.
 - `scripts/update.sh` now triggers a database backup before touching the checkout (`manage.py dbbackup -c` against the deployed stack, identical to the nightly cron; output lands in `./backups/`). A failed backup aborts the update; pass `--no-backup` to skip it.
 - `scripts/update.sh` and `scripts/update_dev.sh` now populate search vectors for PersonaEsclavizada and Persona models after updating the codebase.
+- Added an ephemeral `redis` service to `docker-compose.yml` (image `redis:7-alpine`, `maxmemory 256mb` + `allkeys-lru`, no persistence, not published) with `restart: always` + log rotation in the prod override, and made `web` wait for it via `depends_on: service_healthy`. This fixes the `django_redis` cache that was silently disabled in dev and production (an unreachable Redis host degraded to DB-only under `IGNORE_EXCEPTIONS`); `REDIS_URL` is documented in `.env.example`.
 
 ### Frontend (`mstdb_theme`)
 

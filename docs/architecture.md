@@ -111,8 +111,10 @@
   (e.g. someone else's in-progress edit in the same file), `git add -p` run via the
   sync terminal tool auto-answers "y" to all hunks (no real interactivity) — instead
   build a minimal patch file with just the wanted hunk and `git apply --cached patch.diff`.
-- Redis is configured (`mdb/settings.py` `CACHES` defaults to `redis://redis:6379/1`,
-  `IGNORE_EXCEPTIONS=True`) but is **not** defined in any `docker-compose*.yml` and
-  `.env.example` did not document `REDIS_URL`. With fail-open caching, an unreachable
-  Redis degrades silently to DB-only — verify the production `REDIS_URL` before reading
-  cache metrics.
+- Redis cache runs as the `redis` service in `docker-compose.yml` (ephemeral, no
+  persistence, `maxmemory 256mb` + `allkeys-lru`, not published; `restart: always`
+  in the prod override). `web` waits on it via `depends_on: service_healthy`.
+  `mdb/settings.py` `CACHES` points at `REDIS_URL` (default
+  `redis://redis:6379/1`) with `IGNORE_EXCEPTIONS=True`, so an unreachable Redis
+  still degrades silently to DB-only — a `None` from a cache round-trip in the
+  `web` container means the cache is not actually working.

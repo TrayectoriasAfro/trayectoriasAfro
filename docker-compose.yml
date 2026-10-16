@@ -17,6 +17,25 @@ services:
     networks:
       - trayectorias_network
 
+  redis:
+    image: redis:7-alpine
+    container_name: trayectorias_redis
+    command:
+      - redis-server
+      - --maxmemory
+      - 256mb
+      - --maxmemory-policy
+      - allkeys-lru
+      - --save
+      - ""
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - trayectorias_network
+
   web:
     build:
       context: .
@@ -31,6 +50,8 @@ services:
       - media_volume:/app/media
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/health/"]
