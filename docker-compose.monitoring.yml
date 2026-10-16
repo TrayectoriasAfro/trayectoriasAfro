@@ -1,0 +1,79 @@
+# Additive monitoring layer (Netdata) for the production stack.
+#
+# Append as the FINAL -f layer; no existing compose file is modified. This keeps
+# the change fully reversible: drop the layer (and the named volumes) to remove
+# Netdata entirely, leaving the app stack untouched.
+#
+# Usage (matches scripts/update.sh, which uses the same base layers):
+#   docker compose -f docker-compose.yml -f docker-compose.server.yml \
+#     -f docker-compose.prod.yml -f docker-compose.monitoring.yml up -d
+#
+# The dashboard is bound to 127.0.0.1:19999 ONLY. Reach it over an SSH tunnel:
+#   ssh -L 19999:localhost:19999 <user>@<prod-host>   ->   http://localhost:19999
+# Never publish 19999 on a public interface and do not add it to Cloudflare.
+#
+# The Postgres credentials are interpolated from the root .env at `compose` time
+# (never committed) into the container env, then consumed by the go.d/postgres
+# collector via Netdata's `${env:...}` resolvers in
+# monitoring/netdata/go.d/postgres.conf. The password is URI-encoded by Netdata
+# (`${env+urienc:POSTGRES_PASSWORD}`), so special characters are safe.
+
+services:
+  netdata:
+    # Pinned to the stable release current at install time (multi-arch tag).
+    image: netdata/netdata:v2.12.1
+    container_name: trayectorias_netdata
+    hostname: trayectorias-monitoring
+    restart: unless-stopped
+    pid: host
+
+    ports:
+      # Localhost bind only — reachable via SSH tunnel, never from the internet.
+      - "127.0.0.1:19999:19999"
+
+    environment:
+      # Only the Postgres credentials are handed to Netdata; the app's other
+      # secrets are not. Values come from the root .env via compose interpolation.
+      - POSTGRES_USER=${POSTGRES_USER:-trayectorias_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+      - POSTGRES_DB=${POSTGRES_DB:-trayectorias}
+      - NETDATA_DISABLE_TELEMETRY=1
+
+    volumes:
+      # Persist Netdata state and config so history survives a container restart.
+      - netdata_config:/etc/netdata
+      - netdata_lib:/var/lib/netdata
+      - netdata_cache:/var/cache/netdata
+      # Config-as-code (read-only): retention + the Postgres/Redis/HTTP collectors.
+      - ./monitoring/netdata/netdata.conf:/etc/netdata/netdata.conf:ro
+      - ./monitoring/netdata/go.d:/etc/netdata/go.d:ro
+      # Host visibility (read-only).
+      - /etc/os-release:/host/etc/os-release:ro
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      # Read-only Docker socket: required for per-container metrics.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor=unconfined
+
+    networks:
+      - trayectorias_network
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  netdata_config:
+    driver: local
+  netdata_lib:
+    driver: local
+  netdata_cache:
+    driver: local

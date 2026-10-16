@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Repository
 
+- Added an additive Netdata monitoring layer (`docker-compose.monitoring.yml` + `monitoring/netdata/`) for the live real-user event: a pinned `netdata/netdata:v2.12.1` service joining `trayectorias_network`, host + per-container metrics via a read-only Docker socket, and Postgres/Redis/HTTP-health collectors configured as code. The dashboard binds to `127.0.0.1:19999` only (SSH tunnel; no Cloudflare/public port) and the layer is fully reversible by dropping the `-f` override and its named volumes. No existing compose file or app code is modified.
 - Added `loadtest/`: a repeatable k6 stress-test harness for the public read path (`smoke`, `search-stress`, `viz-mix`, `static`, `spike`), a query-inventory generator (`scripts/generate_queries.js`), a read-only telemetry snapshot recorder, a Cloudflare/throttle pre-flight probe, a write-verb guard test, and an operating runbook (`loadtest/RUNBOOK.md`). Reads only; no write verbs.
 - `scripts/update.sh` now triggers a database backup before touching the checkout (`manage.py dbbackup -c` against the deployed stack, identical to the nightly cron; output lands in `./backups/`). A failed backup aborts the update; pass `--no-backup` to skip it.
 - `scripts/update.sh` and `scripts/update_dev.sh` now populate search vectors for PersonaEsclavizada and Persona models after updating the codebase.

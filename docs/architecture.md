@@ -88,6 +88,26 @@
 - Throttle bypass (`api/throttling.py`): `LOADTEST_TOKEN`-gated `X-Loadtest-Token` header skips the global DRF `anon`/`user` throttles; inert when the env var is unset, reversible, and does not touch auth/permissions. Views with explicit `@throttle_classes` (login/register) are not bypassed.
 - `loadtest/scripts/generate_queries.js` expands `data/queries.seed.json` into `data/queries.json`; `guard_no_writes.sh` fails the build on any write verb; `snapshot.sh` records read-only origin telemetry (`docker stats`, `pg_stat_activity`, `pg_stat_statements`, Redis).
 
+## Production monitoring (`docker-compose.monitoring.yml`)
+- Additive Netdata layer for the live event and ongoing prod observability. It is
+  a separate `-f` layer appended to the prod invocation used by `scripts/update.sh`
+  (`docker compose -f docker-compose.yml -f docker-compose.server.yml
+  -f docker-compose.prod.yml -f docker-compose.monitoring.yml up -d`); no existing
+  compose file is modified, so removing the layer + named volumes fully reverts it.
+- Service `netdata` (`netdata/netdata:v2.12.1`, pinned) joins `trayectorias_network`,
+  mounts the Docker socket and host `/proc` `/sys` `/etc/{os-release,passwd,group}`
+  read-only (`pid: host`, `cap_add: SYS_PTRACE`), and binds the dashboard to
+  `127.0.0.1:19999` only — reach it via `ssh -L 19999:localhost:19999 <user>@<host>`,
+  never through Cloudflare. Config-as-code lives in `monitoring/netdata/`: retention
+  in `netdata.conf` (~2 GB) and `go.d/{postgres,redis,httpcheck}.conf` collectors.
+- Postgres credentials are compose-interpolated from the root `.env` into the
+  container env and consumed via Netdata `${env:...}` resolvers (password
+  URI-encoded); no secret is committed. Redis is `redis:6379` (no auth). The
+  httpcheck jobs probe `https://trayectoriasafro.org` and `/api/v2/health/`.
+- Complements, not replaces, the synthetic harness: `loadtest/scripts/snapshot.sh`
+  remains the text fallback and post-hoc correlation source. Prometheus + Grafana
+  is the documented durable follow-up.
+
 ## Infra gotchas (found during Phase 1 / Lecciones Educativas work, July 2026)
 - Backend dependency mgmt is uv-only: update `mstdb_manager/pyproject.toml` with
   `uv add <pkg>` and commit the resulting `mstdb_manager/uv.lock` change.
