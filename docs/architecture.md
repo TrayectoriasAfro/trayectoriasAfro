@@ -31,6 +31,7 @@
 - Compares a ground-truth Lugar CSV export (default `temp/data/Lugar-<today>.csv`; `comentarios` is a CSV-only curator column, not in the DB) against `dbgestor_lugar` on `lugar_id`: existence both ways, lat/lon agreement (`Decimal` + tolerance, DB column is numeric(9,6)), missing coordinates split into unreferenceable (etnónimo / "no puede ser referenciada" semantics) vs. plain, and consolidation hints (consolidar/unificar/combinar)
 - Outputs: console summary, `--json` full report, `--report` flat CSV of every finding
 - Run inside the web container (`docker exec trayectorias_web python manage.py audit_lugar_csv`); the CSV path must be reachable from the container (mount/copy it in or pass `--csv`)
+- Latest run (CSV `temp/data/Lugar-2026-10-11.csv`, 346 rows vs 397 DB rows): 263 match, **38 coordinate mismatches**, 125 DB rows lack lat/lon (115 plain-missing). Several mismatches are gross overseas-place errors that put African/Caribbean/Asian places on Mexican land or in the sea and are the likely cause of "trajectories cross Central America / end at sea": #45/#46 Panama (`db 18.59,-95.91` = Veracruz), #107 Santo Domingo (`16.32,-95.25` = Oaxaca), #136 Porto Rico `16.72,-93.93`, #260 Puerto Rico `17.66,-100.66`, #275 Carabali `16.81,-99.17`, #282 China `17.31,-95.99` = Oaxaca, #288 India + #132 India de Portugal both `2.19,102.38` = Malaysia, #250 Matamba `17.32,-92.56` = Chiapas. **The CSV is not uniformly authoritative** (e.g. its Angola row is `17.79,-91.27`, i.e. Chiapas, while the DB's `-8.84,13.23` African coast is correct), so these must be curated rather than bulk-applied from the CSV. Map-side, the D3-overlay drift is separately mitigated in `ArcsMap`/`TrajectoryMap` by re-measuring on mount + `resize` + tab visibility (`ResizeObserver` + `map.invalidateSize()`); any coordinate data fix must be followed by clearing the viz cache (600s TTL).
 - Management UI: `vocabularios/conducta-terms/` API (collision-validated writes), Django admin, legacy-form autocomplete, catalogar multi-select with quick creator + "¿Quisiste decir…?" suggestion, Search sidebar searchable-select on the `conductas` facet, persona detail badges
 
 ## API v2 Search & Browse (api/v2/urls.py, SearchAPIView)
@@ -138,3 +139,31 @@
   `redis://redis:6379/1`) with `IGNORE_EXCEPTIONS=True`, so an unreachable Redis
   still degrades silently to DB-only — a `None` from a cache round-trip in the
   `web` container means the cache is not actually working.
+
+## Public data dictionary
+- Model `VariableDefinition` (`dbgestor`): one row per documented model field —
+  `variable_id` (unique slug), `modelo`, `clave`, `tipo`, `descripcion_es/_en`,
+  `orden`. Editable in Django admin (`dbgestor.admin.VariableDefinitionAdmin`).
+- Seed: `manage.py seed_variable_definitions` is idempotent — it creates/refreshes
+  the key/type/order rows and only fills prose when empty (pass
+  `--overwrite-descriptions` to force), so team edits are never clobbered. Run it
+  after adding variables; it is not a data migration.
+- API: `GET /api/v2/data-dictionary/` (`api/v2/views.py::DataDictionaryView`,
+  cached 1h) returns `{models:[{modelo,variables:[...]}], vocabularies:[{modelo,
+  label_es,label_en,terms:[{value,descripcion}]}]}`. Variables come from the model;
+  vocabulary terms come live from the lookup tables, so they never drift.
+- Page: `(app)/Diccionario/+page.svelte` (nav "Diccionario"); searchable, grouped
+  by model, `descripcion_es/_en` chosen via `getLocale()`.
+
+## Translation / language variants (deferred)
+Not implemented. Only `ConductaTerm` has aliases + accent-insensitive matching;
+every other lookup (`Calidades`, `Etonimos`, `Hispanizaciones`, `EstadoCivil`,
+`Actividades`, `TipoDocumental`, `SituacionLugar`, `RolEvento`,
+`TiposInstitucion`, `TipoLugar`) is a single Spanish string matched
+exact/`icontains` (accent-sensitive, no synonyms, `descripcion` effectively
+empty), and the person-descriptor fields (`ojos`, `cabello`,
+`marcas_corporales`, `salud`, `conducta`, `altura`) are free text. The UI
+translates labels/headers/facet labels only; result values and facet options stay
+raw Spanish. Resume shape: (a) a display-translation layer for controlled values
++ facet options, and (b) a synonym/alias layer generalizing `ConductaTerm`.
+Requires a team taxonomy decision first.
