@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Frontend (`mstdb_theme`)
 
+- Fixed missing `m` (Paraglide message function) imports in `Search/RouteDetailPanel.svelte`, `lessons/[id]/+page.svelte`, and `User/catalogar/relaciones/+page.svelte`. The bare `m` resolved to a global and threw a `ReferenceError` only when the affected branch rendered, so the arc/place detail modal in both maps, the public lesson error state, and the cataloger relations loader were broken.
+- Added a durable guard for this class of bug: `scripts/check-i18n-import.js` (npm `check:i18n`) scans `src/` (excluding generated `src/lib/paraglide/**`) and fails if any file calls `m.*` without a `$lib/paraglide/messages.js` import.
 - Search → Lugares: the "Personas" column is now sortable (asc/desc), with the ordering persisted in the URL.
 - Dashboard → People by Place: the "Resumen por Lugar" total column is now "Total Número de Personas Esclavizadas" (`viz_pbp_col_total_personas`), and the remaining hardcoded Spanish (axis labels, table `aria-label`, place dropdown) moved to Paraglide keys.
 - Footers (app and landing) and the Accessibility feedback section now render a `mailto:` contact link only when `PUBLIC_CONTACT_EMAIL` is set (no dead link when unset).
