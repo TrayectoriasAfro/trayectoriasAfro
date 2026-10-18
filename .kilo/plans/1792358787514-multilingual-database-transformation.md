@@ -8,6 +8,11 @@
 
 Transform the monolingual (Spanish-first) database into a bilingual one (es source + en) for semantically relevant textual fields: document titles/abstracts/notes, place names, all vocabularies, lessons, and cataloguer notes. Dates, person names (`nombres`/`apellidos`/`nombre_normalizado`), archive names, and source-transcribed free text stay monolingual.
 
+## Process requirements
+
+- **Commit often: at least one commit per phase** (in the respective repo/submodule). Do not batch multiple phases into a single commit.
+- **Update CHANGELOG.md `[Unreleased]` section with the relevant changes** at the end of each phase, per repo conventions (AGENTS.md §2).
+
 ## Chosen approach: translation rows (Option 2) — hybrid storage
 
 Rejected: JSONB per-cell (breaks the existing PostgreSQL FTS stack: `SearchVector(config='spanish')`, GIN + trigram indexes, `Unaccent` in `dbgestor/signals.py`, `populate_search_vectors`, and `api/v2/views.py` ranking; no FK/tenant semantics for the workbench). Rejected: columns-per-language.
