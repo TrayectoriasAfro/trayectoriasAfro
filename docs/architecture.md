@@ -157,15 +157,15 @@
 - Page: `(app)/Diccionario/+page.svelte` (nav "Diccionario"); searchable, grouped
   by model, `descripcion_es/_en` chosen via `getLocale()`.
 
-## Translation / language variants (deferred)
-Not implemented. Only `ConductaTerm` has aliases + accent-insensitive matching;
-every other lookup (`Calidades`, `Etonimos`, `Hispanizaciones`, `EstadoCivil`,
-`Actividades`, `TipoDocumental`, `SituacionLugar`, `RolEvento`,
-`TiposInstitucion`, `TipoLugar`) is a single Spanish string matched
-exact/`icontains` (accent-sensitive, no synonyms, `descripcion` effectively
-empty), and the person-descriptor fields (`ojos`, `cabello`,
-`marcas_corporales`, `salud`, `conducta`, `altura`) are free text. The UI
-translates labels/headers/facet labels only; result values and facet options stay
-raw Spanish. Resume shape: (a) a display-translation layer for controlled values
-+ facet options, and (b) a synonym/alias layer generalizing `ConductaTerm`.
-Requires a team taxonomy decision first.
+## Translation / language variants (en rollout in progress)
+Phases 1–3 shipped (es source in-place + en rows): `Translation` (GFK
+`(content_type, object_id, field_name, language_code)`, `draft`/`published`) +
+dedicated `LeccionTranslation`; `TranslatableFieldsMixin` on 21 models;
+`?lang=` on api/v2 read serializers (published-only, Spanish fallback);
+staff-only `workbench/translations|leccion-translations` endpoints + Svelte
+workbench at `User/catalogar/traducciones`; published en values feed the
+`english`-config half of each `search_vector`. pt/de need zero schema change
+(`language_code` free text + `SUPPORTED_CONTENT_LANGUAGES`) but no FTS configs,
+import paths, or UI locales yet. Still deferred: synonym/alias layer
+generalizing `ConductaTerm` (b) — requires the team taxonomy decision; person
+descriptor free text (`ojos`, `cabello`, `altura`) stays Spanish-only.
