@@ -39,6 +39,10 @@ git pull --ff-only --recurse-submodules
 git submodule update --init --recursive
 
 "${COMPOSE[@]}" up -d --wait postgres
+
+# Named volumes are created root-owned, shadowing the image's build-time
+# chown; web runs as appuser, so repair ownership before (re)creating it.
+"${COMPOSE[@]}" run --rm --no-deps -u 0 --entrypoint sh web -c "chown -R appuser:appuser /app/media" >/dev/null 2>&1 || true
 "${COMPOSE[@]}" build --pull web frontend
 
 # Apply schema changes using the newly built image before replacing the web service.
