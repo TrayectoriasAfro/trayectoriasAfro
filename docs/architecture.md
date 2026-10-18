@@ -25,6 +25,8 @@
 - `ConductaTerm{canonico unique lowercase, aliases[], descripcion}` + `PersonaEsclavizada.conducta_terms` M2M; the archival free-text `conducta` field is never rewritten — the vocabulary is a normalized layer on top (canonical decision + alias list pending team meeting; seeded with `huído → [huido, hullo, huyo, huyeron, escap*, busque]`)
 - Filter `conducta_canonica=<id|texto>` (search + crosstab, crosstab dimension too) resolves a term via `ConductaTerm.resolve()` (id / canonico / accent-insensitive alias) and matches the M2M link OR `conducta__unaccent__icontains` per alias — unlinked records still surface; wildcard aliases (`escap*`) match by prefix
 - FTS: Persona `search_vector` includes `conducta` (weight D) via correlated Subquery + `UNACCENT` (MTI child fields can't be referenced directly from a parent-table UPDATE), so `q=huido` finds `huído`; reindex with `populate_search_vectors --model persona`
+- FTS: Documento `search_vector` includes `tipo_documento` (weight C) via correlated Subquery; `post_save` on `TipoDocumental` refreshes member documents; reindex with `populate_search_vectors --model documento`
+- Unified search expands persona results with people linked to FTS-matched documents via `pk__in` subqueries on the `Persona.documentos` through table (never a join, preserving doc-date annotations); results carry `match_reason` (`directo`/`documento`), direct first; document payloads carry `personas_esclavizadas_count` / `personas_no_esclavizadas_count`
 - Backfill: `link_conducta_terms` (dry-run default, `--apply`, `--csv` review report; ambiguous aliases like `busque` and wildcards are review-only)
 
 ## Lugar data integrity audit (`audit_lugar_csv`)
