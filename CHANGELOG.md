@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Deploy: `scripts/update.sh` now repairs `/app/media` ownership (named volume is created root-owned, shadowing the image's build-time chown; `web` runs as `appuser`). This was the production cause of lesson PDF/image uploads failing with 400 ("No se pudo guardar...").
 - Lessons: `upload_adjunto` now gated by `IsAuthenticated` for parity with `upload_imagen`, and both upload actions return 400 (not 500) on file-save failures.
 - Lessons page: added static localized "Introducción a las unidades didácticas" paragraphs (`lessons_intro_p1/p2`, ES + EN) below the hero subtitle.
 - Search: `PersonaEsclavizada.salud` is now part of the persona search vector (searching "embarazada" missed most matches). Run `manage.py populate_search_vectors --model persona` after deploying; it also fills ~3,000 personas whose vector was empty.
