@@ -8,19 +8,18 @@ in `?lang=en` API responses, and in search; `draft` rows are workbench-only.
 ## Workbench (recommended)
 
 Open **User → catalogar → traducciones** (`/User/catalogar/traducciones`,
-staff only). Pick a model + field, then work the three views:
+staff only). Pick a model + field + view (Faltantes / Borradores / Publicadas /
+Todas). Every row shows the record ID, the Spanish source text, an English
+textarea, and the status (Sin traducir / Borrador / Publicado):
 
-1. **Faltantes** — record IDs with no English row yet. Enter an ID + English
-   text → *Crear borrador*.
-2. **Borradores** — edit text inline (*Editar → Guardar*), then *Publicar*
-   when reviewed.
-3. **Publicadas** — live rows; *Despublicar* pulls one back to draft.
+- Type the English text and press **Guardar** (per row) or **Guardar N
+  borradores** to save the whole page at once.
+- Tick rows and press **Publicar selección** to publish in bulk (max 500 per
+  call). Only published rows appear on the public site and in search.
+- *Despublicar* pulls a live row back to draft.
 
-To find a record's ID, search it on the public site or in the Django admin —
-detail URLs end in the numeric ID.
-
-To create the very first translation for a model with zero rows, the workbench
-resolves the internal type for you; just use the missing-IDs list.
+To find a record elsewhere, its ID matches the public site detail URLs and the
+Django admin.
 
 ## CSV import (bulk)
 
