@@ -49,6 +49,10 @@ git submodule update --init --recursive
 "${COMPOSE[@]}" run --rm --no-deps web python manage.py migrate --noinput
 "${COMPOSE[@]}" up -d --force-recreate --wait web frontend
 
+# Seed reviewed English vocab drafts (fill-when-empty: never overwrites team
+# edits or unpublishes anything, safe to run on every deploy).
+"${COMPOSE[@]}" exec -T web python manage.py seed_vocab_translations_en
+
 # Populate search vectors for PersonaEsclavizada and Persona models
 "${COMPOSE[@]}" exec -T web python manage.py populate_search_vectors
 
