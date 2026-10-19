@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Backend (`mstdb_manager`)
 
+- Removed the dead `api/v1` and `api/v1beta` packages (unwired leftover code: `views`/`serializers`/`resolvers`). They were already unreferenced by `api/urls.py` (only V2 is routed), the frontend, and all tests; deletes ~64 KB of noise. `docs/API_MIGRATION.md` updated to mark V1 as fully removed.
+
 - API v2: `personas-esclavizadas` list/detail now serialize raw `unidad_temporal_edad` codes (`a/m/d/null`) instead of the Spanish display string, so the Svelte UI localizes age units (days/months/years) via Paraglide. Applies to search table + detail pages; PersonaNoEsclavizada serializers needed no change (no age unit field exposed).
 
 - Multilingual (Phase 1 — schema + backend core, en only): new `Translation` table (GFK `(content_type, object_id, field_name, language_code)` + `draft`/`published` status) and dedicated `LeccionTranslation(leccion, language_code, title, body)`; Spanish stays in-place as the source of truth. `TranslatableFieldsMixin.get_translatable_fields()` is the single source of truth (Documento/Lugar/Persona(+children)/Corporacion/relations + all 13 vocabularies); `get_translation()`/`resolve_translated_fields()` resolve published rows with Spanish fallback. Translation save/delete refreshes the parent `search_vector` via shared `refresh_search_vector()` (published rows only). New idempotent `import_translations --model <name> --file <csv> [--publish]` command; `SUPPORTED_CONTENT_LANGUAGES = ["es", "en"]` in settings.
