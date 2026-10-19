@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [1.5.0] - 2026-10-18
+
 ### Backend (`mstdb_manager`)
 
 - Removed the dead `api/v1` and `api/v1beta` packages (unwired leftover code: `views`/`serializers`/`resolvers`). They were already unreferenced by `api/urls.py` (only V2 is routed), the frontend, and all tests; deletes ~64 KB of noise. `docs/API_MIGRATION.md` updated to mark V1 as fully removed.
